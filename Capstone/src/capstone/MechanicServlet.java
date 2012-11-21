@@ -57,22 +57,30 @@ public class MechanicServlet extends HttpServlet {
 			String user = request.getParameter("userName");
 			String pass = request.getParameter("password");
 
-			User u = (User) emf.createEntityManager()
-					.createQuery("SELECT u  FROM User u").getResultList()
-					.get(0);
+			// User u = (User) emf.createEntityManager()
+			// .createQuery("SELECT u  FROM User u").getResultList()
+			// .get(0);
 
-			System.out.println(u.getFirstname());
+			User u = (User) emf
+					.createEntityManager()
+					.createQuery(
+							"SELECT u  FROM User u WHERE u.username='" + user
+									+ "' AND u.password='" + pass + "'")
+					.getResultList().get(0);
 
-			// if (null != u) {
-			// if (user.equals(u.getUsername())
-			// && password.equals(u.getPassword())) {
-			// response.sendRedirect("http://localhost:8080/Capstone/mech_view.jsp");
-			// } else {
-			// response.sendRedirect("http://localhost:8080/Capstone/Login.xhtml");
-			// }
-			// } else {
-			// response.sendRedirect("http://localhost:8080/Capstone/Login.xhtml");
-			// }
+			if (null != u) {
+				if (user.equals(u.getUsername())
+						&& pass.equals(u.getPassword())) {
+					// response.sendRedirect("http://localhost:8080/Capstone/mech_view.jsp");
+					out.println("WORKED!");
+				} else {
+					// response.sendRedirect("http://localhost:8080/Capstone/Login.xhtml");
+					out.println("NONON");
+				}
+			} else {
+				// response.sendRedirect("http://localhost:8080/Capstone/Login.xhtml");
+				out.println("Null");
+			}
 
 		} else if (request.getParameter("vehicleButton") != null)
 			response.sendRedirect("http://localhost:8080/Capstone/add_edit.jsp");
