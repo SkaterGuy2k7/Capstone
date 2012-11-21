@@ -1,0 +1,86 @@
+CREATE TABLES
+----------------
+
+CREATE TABLE Users (
+userID INT NOT NULL PRIMARY KEY
+		GENERATED ALWAYS AS IDENTITY
+        (START WITH 1, INCREMENT BY 1),
+firstName VARCHAR(50) NOT NULL,
+lastName VARCHAR(50) NOT NULL,
+address VARCHAR(100) NOT NULL,
+city VARCHAR(100) NOT NULL,
+province VARCHAR(100) NOT NULL,
+postal VARCHAR(6) NOT NULL,
+phone VARCHAR(10) NOT NULL,
+fax VARCHAR(10),
+email VARCHAR(50) NOT NULL,
+userName VARCHAR(50) NOT NULL,
+password VARCHAR(50) NOT NULL,
+userType VARCHAR(16) NOT NULL
+)
+
+CREATE TABLE Vehicle (
+vechID INT NOT NULL PRIMARY KEY
+	GENERATED ALWAYS AS IDENTITY
+        (START WITH 1, INCREMENT BY 1),
+userID INT NOT NULL,
+class VARCHAR(25) NOT NULL,
+carYear VARCHAR(4) NOT NULL,
+make VARCHAR(25) NOT NULL,
+model VARCHAR(25) NOT NULL,
+color VARCHAR(25) NOT NULL,
+vin VARCHAR(17) NOT NULL,
+plate VARCHAR(25) NOT NULL,
+engine VARCHAR(25) NOT NULL,
+tranny VARCHAR(6) NOT NULL,
+odometer VARCHAR(6) NOT NULL,
+oilType VARCHAR(25) NOT NULL,
+DateOLC DATE NOT NULL,
+FOREIGN KEY (userID) REFERENCES Users(userID)
+)
+
+
+CREATE TABLE INSPECTION (
+inspectID INT NOT NULL PRIMARY KEY
+	GENERATED ALWAYS AS IDENTITY
+        (START WITH 1, INCREMENT BY 1),
+vechID INT NOT NULL,
+exLights char(1) NOT NULL,
+inLights char(1) NOT NULL,
+horn char(1) NOT NULL,
+wipeBlades char(1) NOT NULL,
+tranFluid char(1) NOT NULL,
+coolFluid char(1) NOT NULL,
+steerFluid char(1) NOT NULL,
+brakeFluid char(1) NOT NULL,
+diffFluid char(1) NOT NULL,
+washFluid char(1) NOT NULL,
+belts char(1) NOT NULL,
+hoses char(1) NOT NULL,
+gaskets char(1) NOT NULL,
+brakeLine char(1) NOT NULL,
+cabinFilter char(1) NOT NULL,
+engineFilter char(1) NOT NULL,
+fuelFilter char(1) NOT NULL,
+exhClamHang char(1) NOT NULL,
+muffPipes char(1) NOT NULL,
+cataConv char(1) NOT NULL,
+tPress char(1) NOT NULL,
+notes VARCHAR(100),
+dateOI DATE NOT NULL,
+FOREIGN KEY (vechID) REFERENCES Vehicle(vechID)
+)
+
+CREATE TABLE Invoice (
+invoiceID INT NOT NULL PRIMARY KEY
+	GENERATED ALWAYS AS IDENTITY
+        (START WITH 1, INCREMENT BY 1),
+dateOI DATE NOT NULL,
+subTotal FLOAT NOT NULL,
+payMethod VARCHAR(25) NOT NULL,
+payRecieved BOOLEAN NOT NULL,
+custID INT NOT NULL,
+vechID INT NOT NULL,
+FOREIGN KEY (custID) REFERENCES Users(userID),
+FOREIGN KEY (vechID) REFERENCES Vehicle(vechID)
+)
