@@ -58,7 +58,7 @@ public class MechanicServlet extends HttpServlet {
 			String pass = request.getParameter("password");
 
 			User u = (User) emf.createEntityManager()
-					.createQuery("SELECT u  FROM Users u").getResultList()
+					.createQuery("SELECT u  FROM User u").getResultList()
 					.get(0);
 
 			System.out.println(u.getFirstname());
