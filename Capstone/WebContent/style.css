@@ -1,0 +1,90 @@
+@CHARSET "ISO-8859-1";
+
+body
+{
+	font-family:Verdana;
+	font-size:16px;
+}
+
+#custinfo
+{
+	valign:top;
+}
+
+#box
+{
+	width:90%;
+	padding:10px;
+	margin: 0px auto;
+
+}
+
+.tab
+{
+	padding-left: 160px;
+}
+
+table, th, td
+{
+	border: 1px solid #2029E5;
+}
+
+table
+{
+	width:70%;
+	border-collapse:collapse;
+}
+
+table.inTable
+{
+	width:100%;
+	border:0px;
+}
+
+td
+{
+	text-align:left;
+}
+
+td.3span
+{
+	width:100%;
+}
+
+th
+{
+	font-size:125%;
+	background-color:#181FAD;
+	color:white;
+}
+
+.subtitle
+{
+	color:#181FAD;
+}
+
+#logo
+{
+	text-align:center;
+}
+
+input[type="submit"]
+{
+	width: 100px; 
+	height: 25px;
+}
+
+input[type="reset"]
+{
+	width: 100px; 
+	height: 25px;
+}
+
+input[type="radio"]
+{
+	text-align:center;
+}
+.tdStyle{
+	text-align:center;
+}
+
