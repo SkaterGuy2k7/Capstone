@@ -30,14 +30,6 @@
 						<td></td>
 					</tr>
 					<tr>
-						<td>Class</td>
-						<td></td>
-					</tr>
-					<tr>
-						<td>Year</td>
-						<td></td>
-					</tr>
-					<tr>
 						<td>Make</td>
 						<td></td>
 					</tr>
@@ -46,7 +38,15 @@
 						<td></td>
 					</tr>
 					<tr>
-						<td>Colour</td>
+						<td>Color</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>Year</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>Engine</td>
 						<td></td>
 					</tr>
 					<tr>
@@ -58,11 +58,7 @@
 						<td></td>
 					</tr>
 					<tr>
-						<td>Engine</td>
-						<td></td>
-					</tr>
-					<tr>
-						<td>Transmission</td>
+						<td>Class</td>
 						<td></td>
 					</tr>
 					<tr>
@@ -70,11 +66,15 @@
 						<td></td>
 					</tr>
 					<tr>
-						<td>Oil Type</td>
-						<td>shutuup allen</td>
+						<td>Date of Last Change</td>
+						<td></td>
 					</tr>
 					<tr>
-						<td>Date of Last Oil Change</td>
+						<td>Transmission</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>Oil Type</td>
 						<td></td>
 					</tr>
 				</table>
