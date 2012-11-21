@@ -61,12 +61,19 @@ public class MechanicServlet extends HttpServlet {
 			// .createQuery("SELECT u  FROM User u").getResultList()
 			// .get(0);
 
-			User u = (User) emf
-					.createEntityManager()
-					.createQuery(
-							"SELECT u  FROM User u WHERE u.username='" + user
-									+ "' AND u.password='" + pass + "'")
-					.getResultList().get(0);
+			User u = null;
+
+			try {
+				u = (User) emf
+						.createEntityManager()
+						.createQuery(
+								"SELECT u  FROM User u WHERE u.username='"
+										+ user + "' AND u.password='" + pass
+										+ "'").getResultList().get(0);
+			} catch (ArrayIndexOutOfBoundsException e) {
+				session.setAttribute("error", e.getMessage());
+				response.sendRedirect("http://localhost:8080/Capstone/Login.xhtml");
+			}
 
 			if (null != u) {
 				if (user.equals(u.getUsername())
