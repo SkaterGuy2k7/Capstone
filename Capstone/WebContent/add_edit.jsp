@@ -28,38 +28,66 @@
 				</tr>
 				<tr>
 					<td>Model</td>
-					<td><input type="text" name="vehicleMake"
-						value="${vehicle.make}" /></td>
+					<td><input type="text" name="vehicleModel"
+						value="${vehicle.model}" /></td>
 				</tr>
 				<tr>
-					<td>Colour</td>
-					<td><input type="text" name="vehicleMake"
-						value="${vehicle.make}" /></td>
+					<td>Color</td>
+					<td><input type="text" name="vehicleColor"
+						value="${vehicle.color}" /></td>
 				</tr>
 				<tr>
 					<td>Year</td>
-					<td><input type="text" name="vehicleMake"
-						value="${vehicle.make}" /></td>
+					<td><input type="text" name="vehicleYear"
+						value="${vehicle.year}" /></td>
+				</tr>
+				<tr>
+					<td>Engine</td>
+					<td><select name="engineType"><option
+								value="4 Cylinder">4 Cylinder</option>
+							<option value="V6">V6</option>
+							<option value="V8">V8</option>
+							<option value="V10">V10</option>
+							<option value="V12">V12</option>
+							<option value="Diesel">Diesel</option>
+					</select></td>
 				</tr>
 				<tr>
 					<td>VIN</td>
-					<td><input type="text" name="vehicleMake"
-						value="${vehicle.make}" /></td>
+					<td><input type="text" name="vehicleVin"
+						value="${vehicle.vin}" /></td>
 				</tr>
 				<tr>
 					<td>Plate</td>
-					<td><input type="text" name="vehicleMake"
-						value="${vehicle.make}" /></td>
+					<td><input type="text" name="vehiclePlate"
+						value="${vehicle.plate}" /></td>
 				</tr>
 				<tr>
 					<td>Class</td>
-					<td><input type="text" name="vehicleMake"
-						value="${vehicle.make}" /></td>
+					<td><input type="text" name="vehicleClass"
+						value="${vehicle.class}" /></td>
 				</tr>
 				<tr>
 					<td>Odometer</td>
-					<td><input type="text" name="vehicleMake"
-						value="${vehicle.make}" /></td>
+					<td><input type="text" name="vehicleOdometer"
+						value="${vehicle.odometer}" /></td>
+				</tr>
+				<tr>
+					<td>Date of Last Change</td>
+					<td><input type="text" name="DateOfChange"
+						value="${vehicle.DateOfChange}" /></td>
+				</tr>
+				<tr>
+					<td>Transmission</td>
+					<td><select name="transmissionType"><option
+								name="Manual" value="Manual">Manual</option>
+							<option value="auto">Automatic</option>
+					</select></td>
+				</tr>
+				<tr>
+					<td>Oil Type</td>
+					<td><input type="text" name="oilType"
+						value="${vehicle.oilType}" /></td>
 				</tr>
 				<tr>
 					<td>Oil Type</td>
@@ -73,6 +101,7 @@
 			</table>
 		</form>
 	</div>
-	<a href="Login.xhtml"/>Login Page</a>
+	<a href="Login.xhtml" />Login Page
+	</a>
 </body>
 </html>
