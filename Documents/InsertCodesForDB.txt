@@ -1,0 +1,9 @@
+insert into users(FIRSTNAME, LASTNAME, ADDRESS, CITY, PROVINCE, POSTAL,
+  PHONE, FAX, EMAIL, USERNAME, PASSWORD, USERTYPE) values('Stephen','Pignataro','22 Curry Cres','Georgetown','Ontario','L7G5S9','9057029758','','s_pignataro@hotmail.ca','pignatas','notapassword','Mech');
+
+insert into users(FIRSTNAME, LASTNAME, ADDRESS, CITY, PROVINCE, POSTAL,
+  PHONE, FAX, EMAIL, USERNAME, PASSWORD, USERTYPE) values('Guy','Other','56 Left Ave.','Saskatoon','Saskatchewan','F5P4S5','4295555555','','notguy@gmail.com','otherguy','boom','Cust');
+
+insert into users(FIRSTNAME, LASTNAME, ADDRESS, CITY, PROVINCE, POSTAL,
+  PHONE, FAX, EMAIL, USERNAME, PASSWORD, USERTYPE) values('Billy','McGruff','100 Chink Dr.','Mississauga','Ontario','H4E4A2','5555555555',NULL,'notBilly@gmail.com','Bill_Fer_Pres','shebangs','PersonalMech');
+

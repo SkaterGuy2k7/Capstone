@@ -21,7 +21,7 @@
 			Password:<input type="password" name="password"
 				style="width: 100px; height: 20px" />
 		</div>
-		<div style="float: right; clear: both">
+		<div style="float: right; clear: both"><span class="error">${error}</span>
 			<input type="submit" name="submit" value="Login" />
 		</div>
 	</form>
@@ -31,10 +31,12 @@
 		<br />
 		<hr />
 	</div>
-	<div style="float: right"><a href="register.xhtml">Register New User</a></div>
+	<div style="float: right">
+		<a href="register.xhtml">Register New User</a>
+	</div>
 	<center>
 		<h2>Welcome to ASAS Industries Maintenance Tracker</h2>
-		
+
 
 
 		<div>
