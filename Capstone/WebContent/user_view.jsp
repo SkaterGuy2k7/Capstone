@@ -29,15 +29,15 @@
 					<table class="inTable">
 						<tr>
 							<td>Name</td>
-							<td>Test Name</td>
+							<td>${user.getFirstname()} ${user.getLastname()}</td>
 						</tr>
 						<tr>
 							<td>Address</td>
-							<td>Test Address</td>
+							<td>${user.getAddress()}</td>
 						</tr>
 						<tr>
 							<td>Phone</td>
-							<td>Test Phone</td>
+							<td>${user.getPhone()}</td>
 						</tr>
 					</table>
 				
@@ -52,18 +52,13 @@
 						<th>Status</th>
 					</tr>
 					<%
-						int count = 6;
-						for (int i = 0; i < count; i++) {
-							out.println("<tr><td><a>Test Model " + i + "</a></td>");
-							out.println("<td>Test Colour " + i + "</td>");
-							out.println("<td>Test Plate " + i + "</td>");
-							out.println("<td>Test Status " + i + "</td></tr>");
-						}
+					
+					
 					%>
 
 				</table>
-				<form action="add_edit.jsp" method="post">
-					<input type="submit" name="vehicleButton" value="Add Vehicle" />
+				<form action="MechanicServlet" method="post">
+					<input type="submit" name="addVehicle" value="Add Vehicle" />
 				</form>
 			</td>
 		</tr>

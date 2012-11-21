@@ -27,7 +27,6 @@ public class MechanicServlet extends HttpServlet {
 			lastName, address, city, province, postalCode, phone, fax;
 
 	ArrayList<User> newUserList = new ArrayList<User>();
-	HttpSession session;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -52,6 +51,7 @@ public class MechanicServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
 		PrintWriter out = response.getWriter();
 		if (request.getParameter("submit") != null) {
 			String user = request.getParameter("userName");
@@ -71,29 +71,34 @@ public class MechanicServlet extends HttpServlet {
 										+ user + "' AND u.password='" + pass
 										+ "'").getResultList().get(0);
 			} catch (ArrayIndexOutOfBoundsException e) {
-				session.setAttribute("error", e.getMessage());
-				response.sendRedirect("http://localhost:8080/Capstone/Login.xhtml");
+				session.setAttribute("error",
+						"Username or password is incorrect!");
+				response.sendRedirect("http://localhost:8080/Capstone/Login.jsp");
 			}
 
 			if (null != u) {
 				if (user.equals(u.getUsername())
 						&& pass.equals(u.getPassword())) {
-					// response.sendRedirect("http://localhost:8080/Capstone/mech_view.jsp");
-					out.println("WORKED!");
+					session.setAttribute("user", u);
+					response.sendRedirect("http://localhost:8080/Capstone/user_view.jsp");
+
 				} else {
-					// response.sendRedirect("http://localhost:8080/Capstone/Login.xhtml");
-					out.println("NONON");
+					response.sendRedirect("http://localhost:8080/Capstone/Login.jsp");
+					session.setAttribute("error",
+							"Username or password is incorrect!");
 				}
 			} else {
-				// response.sendRedirect("http://localhost:8080/Capstone/Login.xhtml");
-				out.println("Null");
+				response.sendRedirect("http://localhost:8080/Capstone/Login.jsp");
+				session.setAttribute("error",
+						"Username or password is incorrect!");
 			}
 
-		} else if (request.getParameter("vehicleButton") != null)
-			response.sendRedirect("http://localhost:8080/Capstone/add_edit.jsp");
+		} else if (request.getParameter("addVehicle") != null) {
+			// run add vehicle code
 
-		else if (request.getParameter("changeVehicle") != null)
-			response.sendRedirect("http://localhost:8080/Capstone/mech_view.jsp");
+		} else if (request.getParameter("changeVehicle") != null) {
+
+		}
 
 		else if (request.getParameter("checkSubmit") != null)
 			response.sendRedirect("http://localhost:8080/Capstone/Vehicle_Invoice.jsp");

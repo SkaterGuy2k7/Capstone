@@ -15,7 +15,7 @@
 
 		<div class="tab">
 			<h4>
-				<span class="subtitle">Vechicle</span> Info
+				<span class="subtitle">Vehicle</span> Info
 			</h4>
 		</div>
 		<div align="center">

@@ -62,6 +62,11 @@
 						value="${vehicle.make}" /></td>
 				</tr>
 				<tr>
+					<td>Oil Type</td>
+					<td><input type="text" name="vehicleMake"
+						value="${vehicle.}" /></td>
+				</tr>
+				<tr>
 					<td><input type="submit" name="changeVehicle"
 						value="Add/Edit Vehicle" /></td>
 				</tr>
