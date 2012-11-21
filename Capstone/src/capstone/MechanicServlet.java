@@ -95,6 +95,24 @@ public class MechanicServlet extends HttpServlet {
 
 		} else if (request.getParameter("addVehicle") != null) {
 			// run add vehicle code
+			String make = request.getParameter("vehicleMake");
+			String model = request.getParameter("vehicleModel");
+			String color = request.getParameter("vehicleColor");
+			String year = request.getParameter("vehicleYear");
+			String engine = request.getParameter("engineType");
+			String vinum = request.getParameter("vehicleVin");
+			String plate = request.getParameter("vehiclePlate");
+			String carClass = request.getParameter("vehicleClass");
+			String odometer = request.getParameter("vehicleOdometer");
+			String doc = request.getParameter("DateOfChange");
+			String tranny = request.getParameter("transmissionType");
+			String oilType = request.getParameter("oilType");
+
+			emf.createEntityManager()
+					.createQuery(
+							"SELECT u  FROM User u WHERE u.username='" + user
+									+ "' AND u.password='" + pass + "'")
+					.getResultList().get(0);
 
 		} else if (request.getParameter("changeVehicle") != null) {
 
