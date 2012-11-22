@@ -7,12 +7,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,8 +29,8 @@ public class MechanicServlet extends HttpServlet {
 
 	@PersistenceUnit
 	EntityManagerFactory emf;
-	String userType, userName, password, retypePass, emailAddy, firstName,
-			lastName, address, city, province, postalCode, phone, fax;
+	// String userType, userName, password, retypePass, emailAddy, firstName,
+	// lastName, address, city, province, postalCode, phone, fax;
 
 	ArrayList<User> newUserList = new ArrayList<User>();
 
@@ -255,6 +255,19 @@ public class MechanicServlet extends HttpServlet {
 						emf.createEntityManager().close();
 						session.setAttribute("errorVech", null);
 
+						List<Vehicle> vechs = null;
+						try {
+							vechs = emf.createEntityManager()
+									.createQuery("SELECT v FROM Vehicle v")
+									.getResultList();
+						} catch (ArrayIndexOutOfBoundsException e) {
+							session.setAttribute("error",
+									"Username or password is incorrect!");
+							response.sendRedirect("http://localhost:8080/Capstone/Login.jsp");
+						}
+
+						// check if vechs is null and such...
+
 						response.sendRedirect("http://localhost:8080/Capstone/user_view.jsp");
 					}
 				}
@@ -278,46 +291,48 @@ public class MechanicServlet extends HttpServlet {
 			response.sendRedirect("http://localhost:8080/Capstone/Vehicle_Invoice.jsp");
 
 		else if (request.getParameter("createUser") != null) {
-			userType = request.getParameter("userTypeDD");
-			userName = request.getParameter("userName");
-			password = request.getParameter("password");
-			retypePass = request.getParameter("retypePass");
-			emailAddy = request.getParameter("emailAddy");
-			firstName = request.getParameter("firstName");
-			lastName = request.getParameter("lastName");
-			address = request.getParameter("address");
-			city = request.getParameter("city");
-			province = request.getParameter("province");
-			postalCode = request.getParameter("postalCode");
-			phone = request.getParameter("phone");
-			fax = request.getParameter("fax");
-
-			session = request.getSession(true);
-
-			/*
-			 * String firstname, String lastname, String address, String city,
-			 * String province, String postal, String phone, String fax, String
-			 * email, String username, String password, String usertype
-			 */
-
-			User newUser = new User(firstName, lastName, address, city,
-					province, postalCode, phone, fax, emailAddy, userName,
-					password, userType);
-			if (!session.isNew()) {
-				newUserList = (ArrayList<User>) session
-						.getAttribute("statename");
-			} else {
-				newUserList = new ArrayList<User>();
-			}
-			if (newUserList == null) {
-				newUserList = new ArrayList<User>();
-			}
-			newUserList.add(newUser);
-			session.setAttribute("statename", newUserList);
-			session.setAttribute("buttonPressed", "createUser");
-
-			RequestDispatcher rd = request.getRequestDispatcher("newUser.jsp");
-			rd.forward(request, response);
+			// userType = request.getParameter("userTypeDD");
+			// userName = request.getParameter("userName");
+			// password = request.getParameter("password");
+			// retypePass = request.getParameter("retypePass");
+			// emailAddy = request.getParameter("emailAddy");
+			// firstName = request.getParameter("firstName");
+			// lastName = request.getParameter("lastName");
+			// address = request.getParameter("address");
+			// city = request.getParameter("city");
+			// province = request.getParameter("province");
+			// postalCode = request.getParameter("postalCode");
+			// phone = request.getParameter("phone");
+			// fax = request.getParameter("fax");
+			//
+			// session = request.getSession(true);
+			//
+			// /*
+			// * String firstname, String lastname, String address, String city,
+			// * String province, String postal, String phone, String fax,
+			// String
+			// * email, String username, String password, String usertype
+			// */
+			//
+			// User newUser = new User(firstName, lastName, address, city,
+			// province, postalCode, phone, fax, emailAddy, userName,
+			// password, userType);
+			// if (!session.isNew()) {
+			// newUserList = (ArrayList<User>) session
+			// .getAttribute("statename");
+			// } else {
+			// newUserList = new ArrayList<User>();
+			// }
+			// if (newUserList == null) {
+			// newUserList = new ArrayList<User>();
+			// }
+			// newUserList.add(newUser);
+			// session.setAttribute("statename", newUserList);
+			// session.setAttribute("buttonPressed", "createUser");
+			//
+			// RequestDispatcher rd =
+			// request.getRequestDispatcher("newUser.jsp");
+			// rd.forward(request, response);
 
 		}
 	}

@@ -52,7 +52,7 @@
 						<th>Status</th>
 					</tr>
 					<%
-					session.setAttribute("action", "");
+					
 					
 					%>
 
