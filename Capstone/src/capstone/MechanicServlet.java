@@ -162,9 +162,11 @@ public class MechanicServlet extends HttpServlet {
 					if (request.getParameter("vehicleVIN").equals(""))
 						errors.put("vinError",
 								"Please fill in the VIN field.<br/>");
-					else if (Pattern.matches("[0-9]+",
-							request.getParameter("vehicleVIN")) == false)
-						errors.put("vinError", "Please enter a valid VIN.<br/>");
+					/*
+					 * else if (Pattern.matches("[0-9]+",
+					 * request.getParameter("vehicleVIN")) == false)
+					 * errors.put("vinError", "Please enter a valid VIN.<br/>");
+					 */
 					else
 						newVech.setVin(request.getParameter("vehicleVIN"));
 					// Plate Validation
@@ -233,10 +235,12 @@ public class MechanicServlet extends HttpServlet {
 					if (request.getParameter("oilType").equals(""))
 						errors.put("oilTypeError",
 								"Please enter an oil type.<br/>");
-					else if (Pattern.matches("[a-zA-Z][0-9]+",
-							request.getParameter("oilType")) == false)
-						errors.put("oilTypeError",
-								"Please enter a valid oil type.<br/>");
+					/*
+					 * else if (Pattern.matches("[a-zA-Z][0-9]+",
+					 * request.getParameter("oilType")) == false)
+					 * errors.put("oilTypeError",
+					 * "Please enter a valid oil type.<br/>");
+					 */
 					else
 						newVech.setOilType(request.getParameter("oilType"));
 
@@ -247,11 +251,8 @@ public class MechanicServlet extends HttpServlet {
 						response.sendRedirect("http://localhost:8080/Capstone/add_edit.jsp");
 					} else { // else add vehicle to database and go to user_view
 								// page
-						emf.createEntityManager().getTransaction().begin();
 						emf.createEntityManager().persist(newVech);
-						emf.createEntityManager().getTransaction().commit();
 						emf.createEntityManager().close();
-
 						session.setAttribute("errorVech", null);
 
 						response.sendRedirect("http://localhost:8080/Capstone/user_view.jsp");
