@@ -85,14 +85,16 @@ public class MechanicServlet extends HttpServlet {
 					response.sendRedirect("http://localhost:8080/Capstone/user_view.jsp");
 
 				} else {
-					response.sendRedirect("http://localhost:8080/Capstone/Login.jsp");
 					session.setAttribute("error",
 							"Username or password is incorrect!");
+					response.sendRedirect("http://localhost:8080/Capstone/Login.jsp");
+
 				}
 			} else {
-				response.sendRedirect("http://localhost:8080/Capstone/Login.jsp");
 				session.setAttribute("error",
 						"Username or password is incorrect!");
+				response.sendRedirect("http://localhost:8080/Capstone/Login.jsp");
+
 			}
 
 		} else if (request.getParameter("changeVehicle") != null) {
