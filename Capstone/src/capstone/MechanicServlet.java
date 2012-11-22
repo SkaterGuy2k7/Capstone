@@ -2,7 +2,13 @@ package capstone;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Pattern;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
@@ -95,24 +101,126 @@ public class MechanicServlet extends HttpServlet {
 
 		} else if (request.getParameter("addVehicle") != null) {
 			// run add vehicle code
-			String make = request.getParameter("vehicleMake");
-			String model = request.getParameter("vehicleModel");
-			String color = request.getParameter("vehicleColor");
-			String year = request.getParameter("vehicleYear");
-			String engine = request.getParameter("engineType");
-			String vinum = request.getParameter("vehicleVin");
-			String plate = request.getParameter("vehiclePlate");
-			String carClass = request.getParameter("vehicleClass");
-			String odometer = request.getParameter("vehicleOdometer");
-			String doc = request.getParameter("DateOfChange");
-			String tranny = request.getParameter("transmissionType");
-			String oilType = request.getParameter("oilType");
+			User u = (User) session.getAttribute("user");
+			Vehicle newVech = new Vehicle();
 
-			emf.createEntityManager()
-					.createQuery(
-							"SELECT u  FROM User u WHERE u.username='" + user
-									+ "' AND u.password='" + pass + "'")
-					.getResultList().get(0);
+			Map<String, String> errors = new HashMap<String, String>(10);
+
+			// Make Validation
+			if (request.getParameter("vehicleMake").equals(""))
+				errors.put("makeError", "Please fill in the make field.");
+			else if (Pattern.matches("[a-zA-Z]+",
+					request.getParameter("vehicleMake")) == false)
+				errors.put("makeError", "Please enter a valid make.");
+			else
+				newVech.setMake(request.getParameter("vehicleMake"));
+			// Model Validation
+			if (request.getParameter("vehicleModel").equals(""))
+				errors.put("modelError", "Please fill in the model field.");
+			else if (Pattern.matches("[a-zA-Z]+",
+					request.getParameter("vehicleModel")) == false)
+				errors.put("modelError", "Please enter a valid model.");
+			else
+				newVech.setModel(request.getParameter("vehicleModel"));
+			// Color Validation
+			if (request.getParameter("vehicleColor").equals(""))
+				errors.put("colorError", "Please fill in the color field.");
+			else if (Pattern.matches("[a-zA-Z]+",
+					request.getParameter("vehicleColor")) == false)
+				errors.put("colorError", "Please enter a valid color.");
+			else
+				newVech.setColor(request.getParameter("vehicleColor"));
+			// Car Year Validation
+			if (request.getParameter("vehicleYear").equals(""))
+				errors.put("carYearError",
+						"Please fill in the vehicle year field.");
+			else if (Pattern.matches("[0-9]+",
+					request.getParameter("vehicleYear")) == false
+					&& request.getParameter("vehicleYear").length() != 4)
+				errors.put("carYearError", "Please enter a valid vehicle year.");
+			else
+				newVech.setCaryear(request.getParameter("vehicleYear"));
+			// Engine Validation
+			if (request.getParameter("engineType").equals("Select engine"))
+				errors.put("engineError",
+						"Please select a value from the engine dropbox.");
+			else
+				newVech.setEngine(request.getParameter("engineType"));
+			// VIN Validation
+			if (request.getParameter("vehicleVIN").equals(""))
+				errors.put("vinError", "Please fill in the VIN field.");
+			else if (Pattern.matches("[0-9]+",
+					request.getParameter("vehicleVIN")) == false)
+				errors.put("vinError", "Please enter a valid VIN.");
+			else
+				newVech.setVin(request.getParameter("vehicleVIN"));
+			// Plate Validation
+			if (request.getParameter("vehiclePlate").equals(""))
+				errors.put("plateError", "Please fill in the plate field.");
+			else
+				newVech.setPlate(request.getParameter("vehiclePlate"));
+			// Car Class Validation
+			if (request.getParameter("vehicleClass").equals(""))
+				errors.put("carClassError",
+						"Please fill in the car class field.");
+			else if (Pattern.matches("[a-zA-Z]+",
+					request.getParameter("vehicleClass")) == false)
+				errors.put("carClassError", "Please enter a valid car class.");
+			else
+				newVech.setCarClass(request.getParameter("vehicleClass"));
+			// Odometer Validation
+			if (request.getParameter("vehicleOdometer").equals(""))
+				errors.put("odoError", "Please fill in the odometer field.");
+			else if (Integer.parseInt(request.getParameter("vehicleOdometer")) < 0)
+				errors.put("odoError", "Please enter a positive number.");
+			else if (Pattern.matches("[0-9]+",
+					request.getParameter("vehicleOdometer")) == false)
+				errors.put("odoError", "Please enter a positive number.");
+			else
+				newVech.setOdometer(request.getParameter("vehicleOdometer"));
+			// Date of last change Validation
+			if (request.getParameter("DateOfChange").equals(""))
+				errors.put("docError",
+						"Please fill in the date of the vehicle's last oil change.");
+			else {
+				SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+				Date doc = new Date();
+				try {
+					doc = df.parse(request.getParameter("DateOfChange"));
+					if (df.format(doc).equals(
+							request.getParameter("DateOfChange"))) {
+
+						newVech.setDateolc(doc);
+
+					} else {
+						errors.put("docError",
+								"Please enter the date in the following format: MM/dd/yyyy");
+					}
+				} catch (ParseException e) {
+					errors.put("docError",
+							"Please enter the date in the following format: MM/dd/yyyy");
+				}
+			}
+			// Tranny Validation
+			if (request.getParameter("transmissionType").equals(
+					"Select transmission"))
+				errors.put("trannyError", "Please select a transmission.");
+			else
+				newVech.setTranny(request.getParameter("transmissionType"));
+			// Oil Type Validation
+			if (request.getParameter("oilType").equals(""))
+				errors.put("oilTypeError", "Please enter an oil type.");
+			else if (Pattern.matches("[a-zA-Z][0-9]+",
+					request.getParameter("oilType")) == false)
+				errors.put("oilTypeError", "Please enter a valid oil type.");
+			else
+				newVech.setOiltype(request.getParameter("oilType"));
+
+			// emf.createEntityManager()
+			// .createQuery(
+			// "SELECT u  FROM User u WHERE u.username='" + user
+			// + "' AND u.password='" + pass + "'")
+			// .getResultList().get(0);
 
 		} else if (request.getParameter("changeVehicle") != null) {
 

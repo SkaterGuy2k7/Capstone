@@ -23,7 +23,7 @@ public class Vehicle implements Serializable {
 	@Column(name = "USERID")
 	private int userid;
 
-	private String caryear;
+	private String carYear;
 
 	@Column(name = "CLASS")
 	private String carClass;
@@ -41,7 +41,7 @@ public class Vehicle implements Serializable {
 
 	private String odometer;
 
-	private String oiltype;
+	private String oilType;
 
 	private String plate;
 
@@ -50,6 +50,25 @@ public class Vehicle implements Serializable {
 	private String vin;
 
 	public Vehicle() {
+	}
+
+	public Vehicle(int userid, String carYear, String carClass, String color,
+			Date dateolc, String engine, String make, String model,
+			String odometer, String oilType, String plate, String tranny,
+			String vin) {
+		this.userid = userid;
+		this.carYear = carYear;
+		this.carClass = carClass;
+		this.color = color;
+		this.dateolc = dateolc;
+		this.engine = engine;
+		this.make = make;
+		this.model = model;
+		this.odometer = odometer;
+		this.oilType = oilType;
+		this.plate = plate;
+		this.tranny = tranny;
+		this.vin = vin;
 	}
 
 	public int getVechid() {
@@ -61,11 +80,11 @@ public class Vehicle implements Serializable {
 	}
 
 	public String getCaryear() {
-		return this.caryear;
+		return this.carYear;
 	}
 
 	public void setCaryear(String caryear) {
-		this.caryear = caryear;
+		this.carYear = caryear;
 	}
 
 	public String getCarClass() {
@@ -125,11 +144,11 @@ public class Vehicle implements Serializable {
 	}
 
 	public String getOiltype() {
-		return this.oiltype;
+		return this.oilType;
 	}
 
 	public void setOiltype(String oiltype) {
-		this.oiltype = oiltype;
+		this.oilType = oiltype;
 	}
 
 	public String getPlate() {
