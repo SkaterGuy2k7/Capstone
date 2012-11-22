@@ -93,7 +93,11 @@ public class MechanicServlet extends HttpServlet {
 			} else {
 				session.setAttribute("error",
 						"Username or password is incorrect!");
-				response.sendRedirect("http://localhost:8080/Capstone/Login.jsp");
+				try {
+					response.sendRedirect("http://localhost:8080/Capstone/Login.jsp");
+				} catch (IllegalStateException e) {
+					out.print(e.getMessage());
+				}
 
 			}
 

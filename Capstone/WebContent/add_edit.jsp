@@ -55,7 +55,7 @@
 				</tr>
 				<tr>
 					<td>VIN</td>
-					<td><input type="text" name="vehicleVin"
+					<td><input type="text" name="vehicleVIN"
 						value="${vehicle.vin}" /></td><span class="error">${errors.vinError}</span>
 				</tr>
 				<tr>
