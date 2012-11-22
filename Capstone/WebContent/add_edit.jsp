@@ -24,22 +24,22 @@
 				<tr>
 					<td>Make</td>
 					<td><input type="text" name="vehicleMake"
-						value="${vehicle.make}" /></td><span class="error">${errors.makeError}</span>
+						value="${vehicle.getMake()}" /></td><span class="error">${errors.makeError}</span>
 				</tr>
 				<tr>
 					<td>Model</td>
 					<td><input type="text" name="vehicleModel"
-						value="${vehicle.model}" /></td><span class="error">${errors.modelError}</span>
+						value="${vehicle.getModel()}" /></td><span class="error">${errors.modelError}</span>
 				</tr>
 				<tr>
 					<td>Color</td>
 					<td><input type="text" name="vehicleColor"
-						value="${vehicle.color}" /></td><span class="error">${errors.colorError}</span>
+						value="${vehicle.getColor()}" /></td><span class="error">${errors.colorError}</span>
 				</tr>
 				<tr>
 					<td>Year</td>
 					<td><input type="text" name="vehicleYear"
-						value="${vehicle.year}" /></td><span class="error">${errors.carYearError}</span>
+						value="${vehicle.getCarYear()}" /></td><span class="error">${errors.carYearError}</span>
 				</tr>
 				<tr>
 					<td>Engine</td>
@@ -56,27 +56,27 @@
 				<tr>
 					<td>VIN</td>
 					<td><input type="text" name="vehicleVIN"
-						value="${vehicle.vin}" /></td><span class="error">${errors.vinError}</span>
+						value="${vehicle.getVin()}" /></td><span class="error">${errors.vinError}</span>
 				</tr>
 				<tr>
 					<td>Plate</td>
 					<td><input type="text" name="vehiclePlate"
-						value="${vehicle.plate}" /></td><span class="error">${errors.plateError}</span>
+						value="${vehicle.getPlate()}" /></td><span class="error">${errors.plateError}</span>
 				</tr>
 				<tr>
 					<td>Class</td>
 					<td><input type="text" name="vehicleClass"
-						value="${vehicle.class}" /></td><span class="error">${errors.carClassError}</span>
+						value="${vehicle.getCarClass()}" /></td><span class="error">${errors.carClassError}</span>
 				</tr>
 				<tr>
 					<td>Odometer</td>
 					<td><input type="text" name="vehicleOdometer"
-						value="${vehicle.odometer}" /></td><span class="error">${errors.odoError}</span>
+						value="${vehicle.getOdometer()}" /></td><span class="error">${errors.odoError}</span>
 				</tr>
 				<tr>
 					<td>Date of Last Change</td>
 					<td><input type="text" name="DateOfChange"
-						value="${vehicle.DateOfChange}" /></td><span class="error">${errors.docError}</span>
+						value="${vehicle.getDateolc().toString()}" /></td><span class="error">${errors.docError}</span>
 				</tr>
 				<tr>
 					<td>Transmission</td>
@@ -89,7 +89,7 @@
 				<tr>
 					<td>Oil Type</td>
 					<td><input type="text" name="oilType"
-						value="${vehicle.oilType}" /></td><span class="error">${errors.oilTypeError}</span>
+						value="${vehicle.getOilType()}" /></td><span class="error">${errors.oilTypeError}</span>
 				</tr>
 				<tr>
 					<td><input style="width:120px" type="submit" name="changeVehicle"

@@ -79,11 +79,11 @@ public class Vehicle implements Serializable {
 		this.vechid = vechid;
 	}
 
-	public String getCaryear() {
+	public String getCarYear() {
 		return this.carYear;
 	}
 
-	public void setCaryear(String carYear) {
+	public void setCarYear(String carYear) {
 		this.carYear = carYear;
 	}
 
@@ -143,11 +143,11 @@ public class Vehicle implements Serializable {
 		this.odometer = odometer;
 	}
 
-	public String getOiltype() {
+	public String getOilType() {
 		return this.oilType;
 	}
 
-	public void setOiltype(String oilType) {
+	public void setOilType(String oilType) {
 		this.oilType = oilType;
 	}
 
