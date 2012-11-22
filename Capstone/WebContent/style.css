@@ -23,9 +23,6 @@ body
 {
 	padding-left: 160px;
 }
-.error{
-	border-width:0px;
-}
 
 table, th, td
 {
@@ -91,4 +88,7 @@ input[type="radio"]
 	text-align:center;
 }
 
-
+.error{
+	color: red;
+	font-weight:bold;
+}
