@@ -43,8 +43,9 @@
 				</tr>
 				<tr>
 					<td>Engine</td>
-					<td><select name="engineType"><option
-								value="4 Cylinder">4 Cylinder</option>
+					<td><select name="engineType">
+							<option value="Select engine">Select Engine</option>
+							<option value="4 Cylinder">4 Cylinder</option>
 							<option value="V6">V6</option>
 							<option value="V8">V8</option>
 							<option value="V10">V10</option>
@@ -79,8 +80,9 @@
 				</tr>
 				<tr>
 					<td>Transmission</td>
-					<td><select name="transmissionType"><option
-								name="Manual" value="Manual">Manual</option>
+					<td><select name="transmissionType">
+							<option name="Select transmission">Select Transmission</option>
+							<option name="Manual" value="Manual">Manual</option>
 							<option value="auto">Automatic</option>
 					</select></td>
 				</tr>
@@ -90,7 +92,7 @@
 						value="${vehicle.oilType}" /></td>
 				</tr>
 				<tr>
-					<td><input type="submit" name="changeVehicle"
+					<td><input style="width:120px" type="submit" name="changeVehicle"
 						value="Add/Edit Vehicle" /></td>
 				</tr>
 			</table>
