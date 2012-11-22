@@ -1,6 +1,7 @@
 package capstone;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -105,6 +106,11 @@ public class Vehicle implements Serializable {
 
 	public Date getDateolc() {
 		return this.dateolc;
+	}
+
+	public String getStringDateolc() {
+		SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+		return df.format(this.dateolc);
 	}
 
 	public void setDateolc(Date dateolc) {

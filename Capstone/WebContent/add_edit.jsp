@@ -43,7 +43,7 @@
 				</tr>
 				<tr>
 					<td>Engine</td>
-					<td><select name="engineType">
+					<td><select name="engineType" value="${vehicle.getEngine()}">
 							<option value="Select engine">Select Engine</option>
 							<option value="4 Cylinder">4 Cylinder</option>
 							<option value="V6">V6</option>
@@ -76,11 +76,11 @@
 				<tr>
 					<td>Date of Last Change</td>
 					<td><input type="text" name="DateOfChange"
-						value="${vehicle.getDateolc().toString()}" /></td><span class="error">${errors.docError}</span>
+						value="${vehicle.getStringDateolc()}" /></td><span class="error">${errors.docError}</span>
 				</tr>
 				<tr>
 					<td>Transmission</td>
-					<td><select name="transmissionType">
+					<td><select name="transmissionType" value="${vehicle.getTranny()}">
 							<option name="Select transmission">Select Transmission</option>
 							<option name="Manual" value="Manual">Manual</option>
 							<option value="auto">Automatic</option>
