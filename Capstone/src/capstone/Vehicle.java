@@ -83,8 +83,8 @@ public class Vehicle implements Serializable {
 		return this.carYear;
 	}
 
-	public void setCaryear(String caryear) {
-		this.carYear = caryear;
+	public void setCaryear(String carYear) {
+		this.carYear = carYear;
 	}
 
 	public String getCarClass() {
@@ -147,8 +147,8 @@ public class Vehicle implements Serializable {
 		return this.oilType;
 	}
 
-	public void setOiltype(String oiltype) {
-		this.oilType = oiltype;
+	public void setOiltype(String oilType) {
+		this.oilType = oilType;
 	}
 
 	public String getPlate() {

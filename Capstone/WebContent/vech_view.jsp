@@ -106,8 +106,8 @@
 	<form>
 	<center>
 	<div>
-	<input type="submit" name="btnEdit" value="Edit Vehicle" />
-	<input type="submit" name="btnDelete" value="Delete Vehicle" />
+	<input type="submit" name="editVehicle" value="Edit Vehicle" />
+	<input type="submit" name="delVehicle" value="Delete Vehicle" />
 	</div>
 	</center>
 	</form>
