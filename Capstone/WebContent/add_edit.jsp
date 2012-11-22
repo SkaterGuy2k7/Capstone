@@ -24,22 +24,22 @@
 				<tr>
 					<td>Make</td>
 					<td><input type="text" name="vehicleMake"
-						value="${vehicle.make}" /></td>
+						value="${vehicle.make}" /></td><span class="error">${errors.makeError}</span>
 				</tr>
 				<tr>
 					<td>Model</td>
 					<td><input type="text" name="vehicleModel"
-						value="${vehicle.model}" /></td>
+						value="${vehicle.model}" /></td><span class="error">${errors.modelError}</span>
 				</tr>
 				<tr>
 					<td>Color</td>
 					<td><input type="text" name="vehicleColor"
-						value="${vehicle.color}" /></td>
+						value="${vehicle.color}" /></td><span class="error">${errors.colorError}</span>
 				</tr>
 				<tr>
 					<td>Year</td>
 					<td><input type="text" name="vehicleYear"
-						value="${vehicle.year}" /></td>
+						value="${vehicle.year}" /></td><span class="error">${errors.carYearError}</span>
 				</tr>
 				<tr>
 					<td>Engine</td>
@@ -51,32 +51,32 @@
 							<option value="V10">V10</option>
 							<option value="V12">V12</option>
 							<option value="Diesel">Diesel</option>
-					</select></td>
+					</select></td><span class="error">${errors.engineError}</span>
 				</tr>
 				<tr>
 					<td>VIN</td>
 					<td><input type="text" name="vehicleVin"
-						value="${vehicle.vin}" /></td>
+						value="${vehicle.vin}" /></td><span class="error">${errors.vinError}</span>
 				</tr>
 				<tr>
 					<td>Plate</td>
 					<td><input type="text" name="vehiclePlate"
-						value="${vehicle.plate}" /></td>
+						value="${vehicle.plate}" /></td><span class="error">${errors.plateError}</span>
 				</tr>
 				<tr>
 					<td>Class</td>
 					<td><input type="text" name="vehicleClass"
-						value="${vehicle.class}" /></td>
+						value="${vehicle.class}" /></td><span class="error">${errors.carClassError}</span>
 				</tr>
 				<tr>
 					<td>Odometer</td>
 					<td><input type="text" name="vehicleOdometer"
-						value="${vehicle.odometer}" /></td>
+						value="${vehicle.odometer}" /></td><span class="error">${errors.odoError}</span>
 				</tr>
 				<tr>
 					<td>Date of Last Change</td>
 					<td><input type="text" name="DateOfChange"
-						value="${vehicle.DateOfChange}" /></td>
+						value="${vehicle.DateOfChange}" /></td><span class="error">${errors.docError}</span>
 				</tr>
 				<tr>
 					<td>Transmission</td>
@@ -84,12 +84,12 @@
 							<option name="Select transmission">Select Transmission</option>
 							<option name="Manual" value="Manual">Manual</option>
 							<option value="auto">Automatic</option>
-					</select></td>
+					</select></td><span class="error">${errors.trannyError}</span>
 				</tr>
 				<tr>
 					<td>Oil Type</td>
 					<td><input type="text" name="oilType"
-						value="${vehicle.oilType}" /></td>
+						value="${vehicle.oilType}" /></td><span class="error">${errors.oilTypeError}</span>
 				</tr>
 				<tr>
 					<td><input style="width:120px" type="submit" name="changeVehicle"
