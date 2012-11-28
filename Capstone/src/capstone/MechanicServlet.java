@@ -2,6 +2,11 @@ package capstone;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
 import javax.servlet.ServletException;
@@ -29,6 +35,7 @@ public class MechanicServlet extends HttpServlet {
 
 	@PersistenceUnit
 	EntityManagerFactory emf;
+	EntityManager em;
 	// String userType, userName, password, retypePass, emailAddy, firstName,
 	// lastName, address, city, province, postalCode, phone, fax;
 
@@ -251,8 +258,80 @@ public class MechanicServlet extends HttpServlet {
 						response.sendRedirect("http://localhost:8080/Capstone/add_edit.jsp");
 					} else { // else add vehicle to database and go to user_view
 								// page
-						emf.createEntityManager().persist(newVech);
-						emf.createEntityManager().close();
+						try {
+							String connectionURL = "jdbc:derby://localhost:1527/sun-appserv-samples;create=true";
+							Connection conn = null;
+							ResultSet rs;
+							conn = DriverManager.getConnection(connectionURL);
+							System.out.println(newVech.getMake() + " "
+									+ newVech.getModel());
+							String sql = "insert into vehicle ('userID, class, carYear, make, model, color, vin, plate, engine, tranny, odometer, oilType, DateOLC') values('"
+									+ u.getUserid()
+									+ "', '"
+									+ newVech.getCarClass()
+									+ "', '"
+									+ newVech.getCarYear()
+									+ "', '"
+									+ newVech.getMake()
+									+ "', '"
+									+ newVech.getModel()
+									+ "', '"
+									+ newVech.getColor()
+									+ "', '"
+									+ newVech.getVin()
+									+ "', '"
+									+ newVech.getPlate()
+									+ "', '"
+									+ newVech.getEngine()
+									+ "', '"
+									+ newVech.getTranny()
+									+ "', '"
+									+ newVech.getOdometer()
+									+ "', '"
+									+ newVech.getOilType()
+									+ "', '"
+									+ newVech.getDateolc() + "');";
+							PreparedStatement pst = conn.prepareStatement(sql);
+							pst.setLong(1, u.getUserid());
+							pst.setString(2, newVech.getCarClass());
+							pst.setString(3, newVech.getCarYear());
+							pst.setString(5, newVech.getMake());
+							pst.setString(6, newVech.getModel());
+							pst.setString(7, newVech.getColor());
+							pst.setString(8, newVech.getVin());
+							pst.setString(9, newVech.getPlate());
+							pst.setString(10, newVech.getEngine());
+							pst.setString(11, newVech.getTranny());
+							pst.setString(12, newVech.getOdometer());
+							pst.setString(13, newVech.getOilType());
+							pst.setString(14, newVech.getDateolc().toString());
+							int numRowsChanged = pst.executeUpdate();
+
+							/*
+							 * em.createQuery(
+							 * "insert into vehicle ('userID, class, carYear, make, model, color, vin, plate, engine, tranny, odometer, oilType, DateOLC') values('"
+							 * + u.getUserid() + "', '" + newVech.getCarClass()
+							 * + "', '" + newVech.getCarYear() + "', '" +
+							 * newVech.getMake() + "', '" + newVech.getModel() +
+							 * "', '" + newVech.getColor() + "', '" +
+							 * newVech.getVin() + "', '" + newVech.getPlate() +
+							 * "', '" + newVech.getEngine() + "', '" +
+							 * newVech.getTranny() + "', '" +
+							 * newVech.getOdometer() + "', '" +
+							 * newVech.getOilType() + "', '" +
+							 * newVech.getDateolc() + "');")
+							 * .getResultList().get(0);
+							 */
+
+							em.persist(newVech);
+							em.close();
+						} catch (SQLException e) {
+							e.getMessage();
+						}
+						/*
+						 * emf.createEntityManager().persist(newVech);
+						 * emf.createEntityManager().close();
+						 */
 						session.setAttribute("errorVech", null);
 
 						List<Vehicle> vechs = null;
