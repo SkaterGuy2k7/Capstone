@@ -78,29 +78,47 @@ public class MechanicServlet extends HttpServlet {
 				rs = statement.executeQuery(sql);
 
 				if (null != rs) {
-					while (rs.next()) {
+					if (rs.getString("userName").equals(user)
+							&& rs.getString("password").equals(pass)) {
+						out.println("Pass");
+					} else
+						out.println("nopass");
+					// while (rs.next()) {
+					// u.setUserid(Integer.parseInt(rs.getString("userID")));
+					// u.setFirstname(rs.getString("firstName"));
+					// u.setLastname(rs.getString("lastName"));
+					// u.setAddress(rs.getString("address"));
+					// u.setCity(rs.getString("city"));
+					// u.setProvince(rs.getString("province"));
+					// u.setPostal(rs.getString("postal"));
+					// u.setPhone(rs.getString("phone"));
+					// u.setFax(rs.getString("fax"));
+					// u.setEmail(rs.getString("email"));
+					// u.setUsername(rs.getString("userName"));
+					// u.setPassword(rs.getString("password"));
+					// u.setUsertype(rs.getString("userType"));
+					// }
+				} else
+					out.println("Resultset is null fer login");
 
-					}
-				}
-
-				if (null != u) {
-					if (user.equals(u.getUsername())
-							&& pass.equals(u.getPassword())) {
-						session.setAttribute("user", u);
-						response.sendRedirect("http://localhost:8080/Capstone/user_view.jsp");
-
-					} else {
-						session.setAttribute("error",
-								"Username or password is incorrect!");
-						response.sendRedirect("http://localhost:8080/Capstone/Login.jsp");
-
-					}
-				} else {
-					session.setAttribute("error",
-							"Username or password is incorrect!");
-
-					response.sendRedirect("http://localhost:8080/Capstone/Login.jsp");
-				}
+				// if (null != u) {
+				// if (user.equals(u.getUsername())
+				// && pass.equals(u.getPassword())) {
+				// session.setAttribute("user", u);
+				// response.sendRedirect("http://localhost:8080/Capstone/user_view.jsp");
+				//
+				// } else {
+				// session.setAttribute("error",
+				// "Username or password is incorrect!");
+				// response.sendRedirect("http://localhost:8080/Capstone/Login.jsp");
+				//
+				// }
+				// } else {
+				// session.setAttribute("error",
+				// "Username or password is incorrect!");
+				//
+				// response.sendRedirect("http://localhost:8080/Capstone/Login.jsp");
+				// }
 			} catch (ArrayIndexOutOfBoundsException e) {
 				session.setAttribute("error",
 						"Username or password is incorrect!");
@@ -108,7 +126,7 @@ public class MechanicServlet extends HttpServlet {
 			} catch (IllegalStateException e) {
 				out.print(e.getMessage());
 			} catch (SQLException e) {
-				out.print(e.getMessage());
+				out.print("SqlException - " + e.getMessage());
 			}
 
 		} else if (request.getParameter("changeVehicle") != null) {
