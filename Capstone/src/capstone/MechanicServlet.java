@@ -7,8 +7,10 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -121,6 +123,7 @@ public class MechanicServlet extends HttpServlet {
 				String action = (String) session.getAttribute("action");
 
 				newVech.setUserid(u.getUserid());
+				newVech.setStatus("Y");
 
 				// Validate No Matter What
 
@@ -171,11 +174,6 @@ public class MechanicServlet extends HttpServlet {
 				// VIN Validation
 				if (request.getParameter("vehicleVIN").equals(""))
 					errors.put("vinError", "Please fill in the VIN field.<br/>");
-				/*
-				 * else if (Pattern.matches("[0-9]+",
-				 * request.getParameter("vehicleVIN")) == false)
-				 * errors.put("vinError", "Please enter a valid VIN.<br/>");
-				 */
 				else
 					newVech.setVin(request.getParameter("vehicleVIN"));
 				// Plate Validation
@@ -216,7 +214,10 @@ public class MechanicServlet extends HttpServlet {
 							"Please fill in the date of the vehicle's last oil change.<br/>");
 				else {
 					SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-					if (df.format(request.getParameter("DateOfChange")).equals(
+					Date doc = new Date();
+
+					doc = df.parse(request.getParameter("DateOfChange"));
+					if (df.format(doc).equals(
 							request.getParameter("DateOfChange"))) {
 
 						newVech.setDateolc(request.getParameter("DateOfChange"));
@@ -260,7 +261,7 @@ public class MechanicServlet extends HttpServlet {
 
 						Statement statement = conn.createStatement();
 
-						String sql = "insert into vehicle (userID, class, carYear, make, model, color, vin, plate, engine, tranny, odometer, oilType, DateOLC) values("
+						String sql = "insert into vehicle (userID, class, carYear, make, model, color, vin, plate, engine, tranny, odometer, oilType, DateOLC, status) values("
 								+ u.getUserid()
 								+ ", '"
 								+ newVech.getCarClass()
@@ -285,7 +286,9 @@ public class MechanicServlet extends HttpServlet {
 								+ "', '"
 								+ newVech.getOilType()
 								+ "', '"
-								+ newVech.getStringDateolc() + "')";
+								+ newVech.getDateolc()
+								+ "', '"
+								+ newVech.getStatus() + "')";
 						statement.executeUpdate(sql);
 
 						// Start grabing vehicles in database put to ArrayList
@@ -311,6 +314,7 @@ public class MechanicServlet extends HttpServlet {
 							v.setOdometer(rs.getString("odometer"));
 							v.setOilType(rs.getString("oilType"));
 							v.setDateolc(rs.getString("DateOLC"));
+							v.setStatus(rs.getString("status"));
 
 							vechList.add(v);
 						}
@@ -342,6 +346,12 @@ public class MechanicServlet extends HttpServlet {
 			} catch (SQLException e) {
 				e.getMessage();
 				System.out.println(e.getMessage());
+			} catch (ParseException e) {
+				errors.put("docError",
+						"Please enter the date in the following format: MM/dd/yyyy<br/>");
+				session.setAttribute("errors", errors);
+				session.setAttribute("vehicle", newVech);
+				response.sendRedirect("http://localhost:8080/Capstone/add_edit.jsp");
 			}
 
 		} else if (request.getParameter("addVehicle") != null) {

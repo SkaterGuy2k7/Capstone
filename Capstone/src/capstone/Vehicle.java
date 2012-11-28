@@ -1,7 +1,6 @@
 package capstone;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -45,6 +44,8 @@ public class Vehicle implements Serializable {
 	private String tranny;
 
 	private String vin;
+
+	private String status;
 
 	public Vehicle() {
 	}
@@ -102,13 +103,6 @@ public class Vehicle implements Serializable {
 
 	public String getDateolc() {
 		return this.dateolc;
-	}
-
-	public String getStringDateolc() {
-		SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-		if (null != this.dateolc)
-			return df.format(this.dateolc);
-		return "";
 	}
 
 	public void setDateolc(String dateolc) {
@@ -185,5 +179,13 @@ public class Vehicle implements Serializable {
 
 	public void setUserid(int userid) {
 		this.userid = userid;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 }

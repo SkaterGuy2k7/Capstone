@@ -76,7 +76,7 @@
 				<tr>
 					<td>Date of Last Change</td>
 					<td><input type="text" name="DateOfChange"
-						value="${vehicle.getStringDateolc()}" /></td><span class="error">${errors.docError}</span>
+						value="${vehicle.getDateolc()}" /></td><span class="error">${errors.docError}</span>
 				</tr>
 				<tr>
 					<td>Transmission</td>
