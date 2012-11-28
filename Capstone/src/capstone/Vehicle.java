@@ -2,13 +2,10 @@ package capstone;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the VEHICLE database table.
@@ -31,8 +28,7 @@ public class Vehicle implements Serializable {
 
 	private String color;
 
-	@Temporal(TemporalType.DATE)
-	private Date dateolc;
+	private String dateolc;
 
 	private String engine;
 
@@ -54,7 +50,7 @@ public class Vehicle implements Serializable {
 	}
 
 	public Vehicle(int userid, String carYear, String carClass, String color,
-			Date dateolc, String engine, String make, String model,
+			String dateolc, String engine, String make, String model,
 			String odometer, String oilType, String plate, String tranny,
 			String vin) {
 		this.userid = userid;
@@ -104,7 +100,7 @@ public class Vehicle implements Serializable {
 		this.color = color;
 	}
 
-	public Date getDateolc() {
+	public String getDateolc() {
 		return this.dateolc;
 	}
 
@@ -115,7 +111,7 @@ public class Vehicle implements Serializable {
 		return "";
 	}
 
-	public void setDateolc(Date dateolc) {
+	public void setDateolc(String dateolc) {
 		this.dateolc = dateolc;
 	}
 

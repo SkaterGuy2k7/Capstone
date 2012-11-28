@@ -7,10 +7,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -72,53 +70,36 @@ public class MechanicServlet extends HttpServlet {
 				conn = DriverManager.getConnection(connectionURL);
 				Statement statement = conn.createStatement();
 
-				String sql = "SELECT * FROM Users WHERE username='" + user
-						+ "' AND password='" + pass;
+				String sql = "SELECT * FROM Users WHERE userName='" + user
+						+ "' AND password='" + pass + "'";
 
 				rs = statement.executeQuery(sql);
+				rs.next();
 
-				if (null != rs) {
-					if (rs.getString("userName").equals(user)
-							&& rs.getString("password").equals(pass)) {
-						out.println("Pass");
-					} else
-						out.println("nopass");
-					// while (rs.next()) {
-					// u.setUserid(Integer.parseInt(rs.getString("userID")));
-					// u.setFirstname(rs.getString("firstName"));
-					// u.setLastname(rs.getString("lastName"));
-					// u.setAddress(rs.getString("address"));
-					// u.setCity(rs.getString("city"));
-					// u.setProvince(rs.getString("province"));
-					// u.setPostal(rs.getString("postal"));
-					// u.setPhone(rs.getString("phone"));
-					// u.setFax(rs.getString("fax"));
-					// u.setEmail(rs.getString("email"));
-					// u.setUsername(rs.getString("userName"));
-					// u.setPassword(rs.getString("password"));
-					// u.setUsertype(rs.getString("userType"));
-					// }
+				if (rs.getString("userName").equals(user)
+						&& rs.getString("password").equals(pass)) {
+					u.setUserid(rs.getInt("userID"));
+					u.setFirstname(rs.getString("firstName"));
+					u.setLastname(rs.getString("lastName"));
+					u.setAddress(rs.getString("address"));
+					u.setCity(rs.getString("city"));
+					u.setProvince(rs.getString("province"));
+					u.setPostal(rs.getString("postal"));
+					u.setPhone(rs.getString("phone"));
+					u.setFax(rs.getString("fax"));
+					u.setEmail(rs.getString("email"));
+					u.setUsername(rs.getString("userName"));
+					u.setPassword(rs.getString("password"));
+					u.setUsertype(rs.getString("userType"));
+
+					session.setAttribute("user", u);
+					response.sendRedirect("http://localhost:8080/Capstone/user_view.jsp");
 				} else
-					out.println("Resultset is null fer login");
+					out.println("nopass");
 
-				// if (null != u) {
-				// if (user.equals(u.getUsername())
-				// && pass.equals(u.getPassword())) {
-				// session.setAttribute("user", u);
-				// response.sendRedirect("http://localhost:8080/Capstone/user_view.jsp");
-				//
-				// } else {
-				// session.setAttribute("error",
-				// "Username or password is incorrect!");
-				// response.sendRedirect("http://localhost:8080/Capstone/Login.jsp");
-				//
-				// }
-				// } else {
-				// session.setAttribute("error",
-				// "Username or password is incorrect!");
-				//
-				// response.sendRedirect("http://localhost:8080/Capstone/Login.jsp");
-				// }
+				statement.close();
+				conn.close();
+
 			} catch (ArrayIndexOutOfBoundsException e) {
 				session.setAttribute("error",
 						"Username or password is incorrect!");
@@ -126,7 +107,9 @@ public class MechanicServlet extends HttpServlet {
 			} catch (IllegalStateException e) {
 				out.print(e.getMessage());
 			} catch (SQLException e) {
-				out.print("SqlException - " + e.getMessage());
+				session.setAttribute("error",
+						"Username or password is incorrect!");
+				response.sendRedirect("http://localhost:8080/Capstone/Login.jsp");
 			}
 
 		} else if (request.getParameter("changeVehicle") != null) {
@@ -233,13 +216,10 @@ public class MechanicServlet extends HttpServlet {
 							"Please fill in the date of the vehicle's last oil change.<br/>");
 				else {
 					SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-					Date doc = new Date();
-
-					doc = df.parse(request.getParameter("DateOfChange"));
-					if (df.format(doc).equals(
+					if (df.format(request.getParameter("DateOfChange")).equals(
 							request.getParameter("DateOfChange"))) {
 
-						newVech.setDateolc(doc);
+						newVech.setDateolc(request.getParameter("DateOfChange"));
 
 					} else {
 						errors.put("docError",
@@ -308,12 +288,40 @@ public class MechanicServlet extends HttpServlet {
 								+ newVech.getStringDateolc() + "')";
 						statement.executeUpdate(sql);
 
+						// Start grabing vehicles in database put to ArrayList
+						// give Arraylist to user_view
+
+						sql = "SELECT * FROM Vehicle";
+						ResultSet rs = statement.executeQuery(sql);
+						ArrayList<Vehicle> vechList = new ArrayList<Vehicle>();
+
+						while (rs.next()) {
+							Vehicle v = new Vehicle();
+							v.setVechid(rs.getInt("vechID"));
+							v.setUserid(rs.getInt("userID"));
+							v.setCarClass(rs.getString("class"));
+							v.setCarYear(rs.getString("carYear"));
+							v.setMake(rs.getString("make"));
+							v.setModel(rs.getString("model"));
+							v.setColor(rs.getString("color"));
+							v.setVin(rs.getString("vin"));
+							v.setPlate(rs.getString("plate"));
+							v.setEngine(rs.getString("engine"));
+							v.setTranny(rs.getString("Tranny"));
+							v.setOdometer(rs.getString("odometer"));
+							v.setOilType(rs.getString("oilType"));
+							v.setDateolc(rs.getString("DateOLC"));
+
+							vechList.add(v);
+						}
+
 						statement.close();
 						conn.close();
 
+						session.setAttribute("vehicles", vechList);
 						response.sendRedirect("http://localhost:8080/Capstone/user_view.jsp");
 					} else if (action.equals("editVehicle")) {
-
+						out.print("EDITEN");
 					} else
 						System.out.println("Mashugana");
 				}
@@ -328,12 +336,6 @@ public class MechanicServlet extends HttpServlet {
 				response.sendRedirect("http://localhost:8080/Capstone/add_edit.jsp");
 			} catch (NumberFormatException e) {
 				errors.put("odoError", "Please enter a positive number.<br/>");
-				session.setAttribute("errors", errors);
-				session.setAttribute("vehicle", newVech);
-				response.sendRedirect("http://localhost:8080/Capstone/add_edit.jsp");
-			} catch (ParseException e) {
-				errors.put("docError",
-						"Please enter the date in the following format: MM/dd/yyyy<br/>");
 				session.setAttribute("errors", errors);
 				session.setAttribute("vehicle", newVech);
 				response.sendRedirect("http://localhost:8080/Capstone/add_edit.jsp");
