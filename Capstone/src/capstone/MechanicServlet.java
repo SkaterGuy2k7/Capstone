@@ -117,6 +117,8 @@ public class MechanicServlet extends HttpServlet {
 				if (action.equals("addVehicle")) {
 					Vehicle newVech = new Vehicle();
 
+					newVech.setUserid(u.getUserid());
+
 					// Make Validation
 					if (request.getParameter("vehicleMake").equals(""))
 						errors.put("makeError",
@@ -335,21 +337,24 @@ public class MechanicServlet extends HttpServlet {
 						session.setAttribute("errorVech", null);
 
 						List<Vehicle> vechs = null;
-						try {
-							vechs = emf.createEntityManager()
-									.createQuery("SELECT v FROM Vehicle v")
-									.getResultList();
-						} catch (ArrayIndexOutOfBoundsException e) {
-							session.setAttribute("error",
-									"Username or password is incorrect!");
-							response.sendRedirect("http://localhost:8080/Capstone/Login.jsp");
-						}
 
-						// check if vechs is null and such...
+						vechs = emf.createEntityManager()
+								.createQuery("SELECT v FROM Vehicle v")
+								.getResultList();
+
+						if (null != vechs) {
+							session.setAttribute("vehicles", vechs);
+						} else {
+							out.println("FUCK!");
+						}
 
 						response.sendRedirect("http://localhost:8080/Capstone/user_view.jsp");
 					}
 				}
+				// For some reason when this button is pushed and there are no
+				// errors, the page isnt redirected. It instead goes out of the
+				// if statement that checks action attribute
+				// which is a blank page...
 			} catch (NullPointerException e) {
 				session.setAttribute("action", "addVehicle");
 			} catch (NumberFormatException e) {

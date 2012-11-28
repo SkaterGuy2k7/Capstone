@@ -110,7 +110,9 @@ public class Vehicle implements Serializable {
 
 	public String getStringDateolc() {
 		SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-		return df.format(this.dateolc);
+		if (null != this.dateolc)
+			return df.format(this.dateolc);
+		return "";
 	}
 
 	public void setDateolc(Date dateolc) {
