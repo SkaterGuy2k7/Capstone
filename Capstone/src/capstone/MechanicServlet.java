@@ -121,6 +121,22 @@ public class MechanicServlet extends HttpServlet {
 							singletonBean.loggedUsers.add(u);
 						}
 
+					} else {
+						u.setUserid(rs.getInt("userID"));
+						u.setFirstname(rs.getString("firstName"));
+						u.setLastname(rs.getString("lastName"));
+						u.setAddress(rs.getString("address"));
+						u.setCity(rs.getString("city"));
+						u.setProvince(rs.getString("province"));
+						u.setPostal(rs.getString("postal"));
+						u.setPhone(rs.getString("phone"));
+						u.setFax(rs.getString("fax"));
+						u.setEmail(rs.getString("email"));
+						u.setUsername(rs.getString("userName"));
+						u.setPassword(rs.getString("password"));
+						u.setUsertype(rs.getString("userType"));
+
+						singletonBean.loggedUsers.add(u);
 					}
 
 					sql = "SELECT * FROM Vehicle";
@@ -153,18 +169,16 @@ public class MechanicServlet extends HttpServlet {
 
 					session.setAttribute("vehicles", vechList);
 					int userIndex = singletonBean.loggedUsers.indexOf(u);
-					session.setAttribute("user"
-							+ singletonBean.loggedUsers.get(userIndex)
-									.getUserid(),
+					session.setAttribute("user",
 							singletonBean.loggedUsers.get(userIndex));
 					response.sendRedirect("http://localhost:8080/Capstone/user_view.jsp");
 				} else
 					out.println("nopass");
 
-			} catch (ArrayIndexOutOfBoundsException e) {
-				session.setAttribute("error",
-						"Username or password is incorrect!");
-				response.sendRedirect("http://localhost:8080/Capstone/Login.jsp");
+				// } catch (ArrayIndexOutOfBoundsException e) {
+				// session.setAttribute("error",
+				// "Username or password is incorrect!");
+				// response.sendRedirect("http://localhost:8080/Capstone/Login.jsp");
 			} catch (IllegalStateException e) {
 				out.print(e.getMessage());
 			} catch (SQLException e) {
