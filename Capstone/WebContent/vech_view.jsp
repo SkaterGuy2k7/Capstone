@@ -11,6 +11,9 @@
 	<div id="logo">
 		<img src="ASASLogo.png" />
 	</div>
+		<div style="float:right"><form action="MechanicServlet" method="post">
+		<input type="button" value="Logout" name="logout" />
+	</form></div>
 	<div id="box">
 
 		<div class="tab">
