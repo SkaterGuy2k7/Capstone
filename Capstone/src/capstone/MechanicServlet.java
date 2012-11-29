@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,13 +29,8 @@ import javax.servlet.http.HttpSession;
 public class MechanicServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	@EJB
-	SessionBean singletonBean;
-
 	// String userType, userName, password, retypePass, emailAddy, firstName,
 	// lastName, address, city, province, postalCode, phone, fax;
-
-	ArrayList<User> newUserList = new ArrayList<User>();
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -72,6 +66,7 @@ public class MechanicServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		session.setAttribute("error", null);
 		if (request.getParameter("submit") != null) {
+			session.setAttribute("user", null);
 			String user = request.getParameter("userName");
 			String pass = request.getParameter("password");
 
@@ -92,54 +87,21 @@ public class MechanicServlet extends HttpServlet {
 
 				if (rs.getString("userName").equals(user)
 						&& rs.getString("password").equals(pass)) {
-					if (!singletonBean.loggedUsers.isEmpty()) {
-						boolean logged = false;
-						for (User logU : singletonBean.loggedUsers) {
-							if (logU.getUsername().equals(user)
-									&& logU.getPassword().equals(pass))
-								logged = true;
-						}
 
-						if (logged) {
-							session.setAttribute("error",
-									"User is already logged in!");
-						} else {
-							u.setUserid(rs.getInt("userID"));
-							u.setFirstname(rs.getString("firstName"));
-							u.setLastname(rs.getString("lastName"));
-							u.setAddress(rs.getString("address"));
-							u.setCity(rs.getString("city"));
-							u.setProvince(rs.getString("province"));
-							u.setPostal(rs.getString("postal"));
-							u.setPhone(rs.getString("phone"));
-							u.setFax(rs.getString("fax"));
-							u.setEmail(rs.getString("email"));
-							u.setUsername(rs.getString("userName"));
-							u.setPassword(rs.getString("password"));
-							u.setUsertype(rs.getString("userType"));
-
-							singletonBean.loggedUsers.add(u);
-						}
-
-					} else {
-						u.setUserid(rs.getInt("userID"));
-						u.setFirstname(rs.getString("firstName"));
-						u.setLastname(rs.getString("lastName"));
-						u.setAddress(rs.getString("address"));
-						u.setCity(rs.getString("city"));
-						u.setProvince(rs.getString("province"));
-						u.setPostal(rs.getString("postal"));
-						u.setPhone(rs.getString("phone"));
-						u.setFax(rs.getString("fax"));
-						u.setEmail(rs.getString("email"));
-						u.setUsername(rs.getString("userName"));
-						u.setPassword(rs.getString("password"));
-						u.setUsertype(rs.getString("userType"));
-
-						singletonBean.loggedUsers.add(u);
-					}
-
-					sql = "SELECT * FROM Vehicle";
+					u.setUserid(rs.getInt("userID"));
+					u.setFirstname(rs.getString("firstName"));
+					u.setLastname(rs.getString("lastName"));
+					u.setAddress(rs.getString("address"));
+					u.setCity(rs.getString("city"));
+					u.setProvince(rs.getString("province"));
+					u.setPostal(rs.getString("postal"));
+					u.setPhone(rs.getString("phone"));
+					u.setFax(rs.getString("fax"));
+					u.setEmail(rs.getString("email"));
+					u.setUsername(rs.getString("userName"));
+					u.setPassword(rs.getString("password"));
+					u.setUsertype(rs.getString("userType"));
+					sql = "SELECT * FROM Vehicle WHERE userId=" + u.getUserid();
 					rs = statement.executeQuery(sql);
 					ArrayList<Vehicle> vechList = new ArrayList<Vehicle>();
 
@@ -168,9 +130,7 @@ public class MechanicServlet extends HttpServlet {
 					conn.close();
 
 					session.setAttribute("vehicles", vechList);
-					int userIndex = singletonBean.loggedUsers.indexOf(u);
-					session.setAttribute("user",
-							singletonBean.loggedUsers.get(userIndex));
+					session.setAttribute("user", u);
 					response.sendRedirect("http://localhost:8080/Capstone/user_view.jsp");
 				} else
 					out.println("nopass");
@@ -189,8 +149,8 @@ public class MechanicServlet extends HttpServlet {
 			// run add vehicle code
 			Map<String, String> errors = new HashMap<String, String>(10);
 			Vehicle newVech = new Vehicle();
+			User u = (User) session.getAttribute("user");
 			try {
-				User u = (User) session.getAttribute("user");
 				String action = (String) session.getAttribute("action");
 
 				newVech.setUserid(u.getUserid());
@@ -365,7 +325,8 @@ public class MechanicServlet extends HttpServlet {
 						// Start grabing vehicles in database put to ArrayList
 						// give Arraylist to user_view
 
-						sql = "SELECT * FROM Vehicle";
+						sql = "SELECT * FROM Vehicle WHERE userId="
+								+ u.getUserid();
 						ResultSet rs = statement.executeQuery(sql);
 						ArrayList<Vehicle> vechList = new ArrayList<Vehicle>();
 
@@ -431,7 +392,8 @@ public class MechanicServlet extends HttpServlet {
 			response.sendRedirect("http://localhost:8080/Capstone/add_edit.jsp");
 
 		} else if (request.getParameter("Logout") != null) {
-
+			User u = (User) session.getAttribute("user");
+			session.setAttribute("user", null);
 		}
 
 		else if (request.getParameter("checkSubmit") != null)
