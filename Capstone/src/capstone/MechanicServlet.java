@@ -418,6 +418,8 @@ public class MechanicServlet extends HttpServlet {
 			session.setAttribute("errors", null);
 			response.sendRedirect("http://localhost:8080/Capstone/add_edit.jsp");
 
+		} else if (request.getParameter("Logout") != null) {
+
 		}
 
 		else if (request.getParameter("checkSubmit") != null)
