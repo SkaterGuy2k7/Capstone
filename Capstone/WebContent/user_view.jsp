@@ -57,9 +57,18 @@
 
 								if (null != vechList) {
 									for (Vehicle v : vechList) {
-										out.println("<tr><td><a href" + v.getModel() + "</td><td>"
-												+ v.getColor() + "</td><td>" + v.getPlate()
-												+ "</td><td>" + v.getStatus() + "</td></tr>");
+										out.println("<tr><td><a href=\"http://localhost:8080/Capstone/MechanicServlet?vechid="
+												+ v.getVechid()
+												+ "\">"
+												+ v.getModel()
+												+ "</a>"
+												+ "</td><td>"
+												+ v.getColor()
+												+ "</td><td>"
+												+ v.getPlate()
+												+ "</td><td>"
+												+ v.getStatus()
+												+ "</td></tr>");
 									}
 								}
 							%>

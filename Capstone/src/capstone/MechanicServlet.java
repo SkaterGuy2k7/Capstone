@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -28,6 +29,9 @@ import javax.servlet.http.HttpSession;
 @WebServlet("/MechanicServlet")
 public class MechanicServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+
+	@EJB
+	SessionBean singletonBean;
 
 	// String userType, userName, password, retypePass, emailAddy, firstName,
 	// lastName, address, city, province, postalCode, phone, fax;
@@ -48,7 +52,14 @@ public class MechanicServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		String vechId = request.getParameter("vechid");
+		PrintWriter out = response.getWriter();
 
+		if (null != vechId) {
+			out.println(vechId);
+		} else
+			out.println("FUCK");
 	}
 
 	/**
@@ -80,19 +91,37 @@ public class MechanicServlet extends HttpServlet {
 
 				if (rs.getString("userName").equals(user)
 						&& rs.getString("password").equals(pass)) {
-					u.setUserid(rs.getInt("userID"));
-					u.setFirstname(rs.getString("firstName"));
-					u.setLastname(rs.getString("lastName"));
-					u.setAddress(rs.getString("address"));
-					u.setCity(rs.getString("city"));
-					u.setProvince(rs.getString("province"));
-					u.setPostal(rs.getString("postal"));
-					u.setPhone(rs.getString("phone"));
-					u.setFax(rs.getString("fax"));
-					u.setEmail(rs.getString("email"));
-					u.setUsername(rs.getString("userName"));
-					u.setPassword(rs.getString("password"));
-					u.setUsertype(rs.getString("userType"));
+					if (!singletonBean.loggedUsers.isEmpty()) {
+						boolean logged = false;
+						for (User logU : singletonBean.loggedUsers) {
+							if (logU.getUsername().equals(user)
+									&& logU.getPassword().equals(pass))
+								logged = true;
+						}
+
+						if (logged) {
+							session.setAttribute("error",
+									"User is already logged in!");
+							response.sendRedirect("http://localhost:8080/Capstone/Login.jsp");
+						} else {
+							u.setUserid(rs.getInt("userID"));
+							u.setFirstname(rs.getString("firstName"));
+							u.setLastname(rs.getString("lastName"));
+							u.setAddress(rs.getString("address"));
+							u.setCity(rs.getString("city"));
+							u.setProvince(rs.getString("province"));
+							u.setPostal(rs.getString("postal"));
+							u.setPhone(rs.getString("phone"));
+							u.setFax(rs.getString("fax"));
+							u.setEmail(rs.getString("email"));
+							u.setUsername(rs.getString("userName"));
+							u.setPassword(rs.getString("password"));
+							u.setUsertype(rs.getString("userType"));
+
+							singletonBean.loggedUsers.add(u);
+						}
+
+					}
 
 					sql = "SELECT * FROM Vehicle";
 					rs = statement.executeQuery(sql);
@@ -123,7 +152,11 @@ public class MechanicServlet extends HttpServlet {
 					conn.close();
 
 					session.setAttribute("vehicles", vechList);
-					session.setAttribute("user", u);
+					int userIndex = singletonBean.loggedUsers.indexOf(u);
+					session.setAttribute("user"
+							+ singletonBean.loggedUsers.get(userIndex)
+									.getUserid(),
+							singletonBean.loggedUsers.get(userIndex));
 					response.sendRedirect("http://localhost:8080/Capstone/user_view.jsp");
 				} else
 					out.println("nopass");
