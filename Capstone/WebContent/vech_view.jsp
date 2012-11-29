@@ -87,7 +87,7 @@
 		<br /> <br />
 		<div class="tab">
 			<h4>
-				<span class="subtitle">Vechicle</span> Service
+				<span class="subtitle">Vechicle</span> Service 
 			</h4>
 		</div>
 		<div align="center">
@@ -110,6 +110,7 @@
 	<div>
 	<input type="submit" name="editVehicle" value="Edit Vehicle" />
 	<input type="submit" name="delVehicle" value="Delete Vehicle" />
+	<input type="submit" name="servVehicle" value="Service Vehicle" ${disabled}/>
 	</div>
 	</center>
 	</form>

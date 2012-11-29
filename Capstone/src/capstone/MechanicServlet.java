@@ -83,6 +83,12 @@ public class MechanicServlet extends HttpServlet {
 			session.setAttribute("vehicle", v);
 			// setDropdowns
 			setDropdowns(request, v);
+			User u = (User) session.getAttribute("user");
+			// disable Service button if Customer
+			if (u.getUsertype().equals("Cust"))
+				session.setAttribute("disabled", "disabled");
+			else
+				session.setAttribute("disabled", null);
 			// NEED TO DO INSPECTIONS
 
 			response.sendRedirect("http://localhost:8080/Capstone/vech_view.jsp");
@@ -437,6 +443,13 @@ public class MechanicServlet extends HttpServlet {
 			session.setAttribute("action", "editVehicle");
 			session.setAttribute("errors", null);
 			response.sendRedirect("http://localhost:8080/Capstone/add_edit.jsp");
+
+		} else if ((request.getParameter("servVehicle") != null)) {
+			User user = (User) session.getAttribute("user");
+			if (user.getUsertype().equals("Cust")) {
+				session.setAttribute("disabled", "disabled");
+			} else
+				session.setAttribute("disabled", null);
 
 		} else if (request.getParameter("logout") != null) {
 			session.setAttribute("user", null);
