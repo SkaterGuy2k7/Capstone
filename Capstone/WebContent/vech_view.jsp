@@ -12,7 +12,7 @@
 		<img src="ASASLogo.png" />
 	</div>
 		<div style="float:right"><form action="MechanicServlet" method="post">
-		<input type="button" value="Logout" name="logout" />
+		<input type="submit" value="Logout" name="logout" />
 	</form></div>
 	<div id="box">
 
