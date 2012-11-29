@@ -94,13 +94,39 @@ public class MechanicServlet extends HttpServlet {
 					u.setPassword(rs.getString("password"));
 					u.setUsertype(rs.getString("userType"));
 
+					sql = "SELECT * FROM Vehicle";
+					rs = statement.executeQuery(sql);
+					ArrayList<Vehicle> vechList = new ArrayList<Vehicle>();
+
+					while (rs.next()) {
+						Vehicle v = new Vehicle();
+						v.setVechid(rs.getInt("vechID"));
+						v.setUserid(rs.getInt("userID"));
+						v.setCarClass(rs.getString("class"));
+						v.setCarYear(rs.getString("carYear"));
+						v.setMake(rs.getString("make"));
+						v.setModel(rs.getString("model"));
+						v.setColor(rs.getString("color"));
+						v.setVin(rs.getString("vin"));
+						v.setPlate(rs.getString("plate"));
+						v.setEngine(rs.getString("engine"));
+						v.setTranny(rs.getString("Tranny"));
+						v.setOdometer(rs.getString("odometer"));
+						v.setOilType(rs.getString("oilType"));
+						v.setDateolc(rs.getString("DateOLC"));
+						v.setStatus(rs.getString("status"));
+
+						vechList.add(v);
+					}
+
+					statement.close();
+					conn.close();
+
+					session.setAttribute("vehicles", vechList);
 					session.setAttribute("user", u);
 					response.sendRedirect("http://localhost:8080/Capstone/user_view.jsp");
 				} else
 					out.println("nopass");
-
-				statement.close();
-				conn.close();
 
 			} catch (ArrayIndexOutOfBoundsException e) {
 				session.setAttribute("error",

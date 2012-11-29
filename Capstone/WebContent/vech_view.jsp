@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" type="text/css" href="style.css" />
-<title>Insert title here</title>
+<title>Vehicle View</title>
 </head>
 <body>
 	<div id="logo">
@@ -23,59 +23,59 @@
 				<table>
 					<tr>
 						<td>Vechicle ID</td>
-						<td></td>
+						<td>${ vehicle.getVechid()}</td>
 					</tr>
 					<tr>
-						<td>Customer ID</td>
-						<td></td>
+						<td>User ID</td>
+						<td>${ vehicle.getUserid()}</td>
 					</tr>
 					<tr>
 						<td>Make</td>
-						<td></td>
+						<td>${ vehicle.getMake()}</td>
 					</tr>
 					<tr>
 						<td>Model</td>
-						<td></td>
+						<td>${ vehicle.getModel()}</td>
 					</tr>
 					<tr>
 						<td>Color</td>
-						<td></td>
+						<td>${ vehicle.getColor()}</td>
 					</tr>
 					<tr>
 						<td>Year</td>
-						<td></td>
+						<td>${ vehicle.getCarYear()}</td>
 					</tr>
 					<tr>
 						<td>Engine</td>
-						<td></td>
+						<td>${ vehicle.getEngine()}</td>
 					</tr>
 					<tr>
 						<td>VIN</td>
-						<td></td>
+						<td>${ vehicle.getVin()}</td>
 					</tr>
 					<tr>
 						<td>Plate</td>
-						<td></td>
+						<td>${ vehicle.getPlate()}</td>
 					</tr>
 					<tr>
 						<td>Class</td>
-						<td></td>
+						<td>${ vehicle.getCarClass()}</td>
 					</tr>
 					<tr>
 						<td>Odometer</td>
-						<td></td>
+						<td>${ vehicle.getOdometer()}</td>
 					</tr>
 					<tr>
 						<td>Date of Last Change</td>
-						<td></td>
+						<td>${ vehicle.getDateolc()}</td>
 					</tr>
 					<tr>
 						<td>Transmission</td>
-						<td></td>
+						<td>${ vehicle.getTranny()}</td>
 					</tr>
 					<tr>
 						<td>Oil Type</td>
-						<td></td>
+						<td>${ vehicle.getOilType()}</td>
 					</tr>
 				</table>
 				<br />

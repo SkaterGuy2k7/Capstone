@@ -57,7 +57,7 @@
 
 								if (null != vechList) {
 									for (Vehicle v : vechList) {
-										out.println("<tr><td>" + v.getModel() + "</td><td>"
+										out.println("<tr><td><a href" + v.getModel() + "</td><td>"
 												+ v.getColor() + "</td><td>" + v.getPlate()
 												+ "</td><td>" + v.getStatus() + "</td></tr>");
 									}

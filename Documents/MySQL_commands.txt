@@ -36,6 +36,7 @@ tranny VARCHAR(6) NOT NULL,
 odometer VARCHAR(6) NOT NULL,
 oilType VARCHAR(25) NOT NULL,
 DateOLC VARCHAR(10) NOT NULL,
+status char(1) NOT NULL,
 FOREIGN KEY (userID) REFERENCES Users(userID)
 )
 
