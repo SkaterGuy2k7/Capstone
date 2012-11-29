@@ -43,12 +43,12 @@
 					<td>Engine</td>
 					<td><select name="engineType" value="${vehicle.getEngine()}">
 							<option value="Select engine">Select Engine</option>
-							<option value="4 Cylinder">4 Cylinder</option>
-							<option value="V6">V6</option>
-							<option value="V8">V8</option>
-							<option value="V10">V10</option>
-							<option value="V12">V12</option>
-							<option value="Diesel">Diesel</option>
+							<option value="4 Cylinder" ${selectedV4 }>4 Cylinder</option>
+							<option value="V6" ${selectedV6 }>V6</option>
+							<option value="V8" ${selectedV8 }>V8</option>
+							<option value="V10" ${selectedV10 }>V10</option>
+							<option value="V12" ${selectedV12 }>V12</option>
+							<option value="Diesel" ${selectedD }>Diesel</option>
 					</select></td><span class="error">${errors.engineError}</span>
 				</tr>
 				<tr>
@@ -80,8 +80,8 @@
 					<td>Transmission</td>
 					<td><select name="transmissionType" value="${vehicle.getTranny()}">
 							<option name="Select transmission">Select Transmission</option>
-							<option name="Manual" value="Manual">Manual</option>
-							<option value="auto">Automatic</option>
+							<option name="Manual" value="Manual" ${selectedM }>Manual</option>
+							<option value="auto" ${selectedA }>Automatic</option>
 					</select></td><span class="error">${errors.trannyError}</span>
 				</tr>
 				<tr>

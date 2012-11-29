@@ -81,7 +81,8 @@ public class MechanicServlet extends HttpServlet {
 			v.setStatus(rs.getString("status"));
 
 			session.setAttribute("vehicle", v);
-
+			// setDropdowns
+			setDropdowns(request, v);
 			// NEED TO DO INSPECTIONS
 
 			response.sendRedirect("http://localhost:8080/Capstone/vech_view.jsp");
@@ -314,6 +315,7 @@ public class MechanicServlet extends HttpServlet {
 				if (!errors.isEmpty()) {
 					session.setAttribute("errors", errors);
 					session.setAttribute("vehicle", newVech);
+					setDropdowns(request, newVech);
 					response.sendRedirect("http://localhost:8080/Capstone/add_edit.jsp");
 				} else { // else add vehicle to database and go to user_view
 							// page
@@ -405,11 +407,13 @@ public class MechanicServlet extends HttpServlet {
 			} catch (NullPointerException e) {
 				session.setAttribute("action", "addVehicle");
 				session.setAttribute("errors", errors);
+				setDropdowns(request, newVech);
 				session.setAttribute("vehicle", newVech);
 				response.sendRedirect("http://localhost:8080/Capstone/add_edit.jsp");
 			} catch (NumberFormatException e) {
 				errors.put("odoError", "Please enter a positive number.<br/>");
 				session.setAttribute("errors", errors);
+				setDropdowns(request, newVech);
 				session.setAttribute("vehicle", newVech);
 				response.sendRedirect("http://localhost:8080/Capstone/add_edit.jsp");
 			} catch (SQLException e) {
@@ -420,6 +424,7 @@ public class MechanicServlet extends HttpServlet {
 						"Please enter the date in the following format: MM/dd/yyyy<br/>");
 				session.setAttribute("errors", errors);
 				session.setAttribute("vehicle", newVech);
+				setDropdowns(request, newVech);
 				response.sendRedirect("http://localhost:8080/Capstone/add_edit.jsp");
 			}
 
@@ -486,5 +491,28 @@ public class MechanicServlet extends HttpServlet {
 			// rd.forward(request, response);
 
 		}
+	}
+
+	private void setDropdowns(HttpServletRequest request, Vehicle v) {
+		HttpSession session = request.getSession();
+		// Set the dropdowns to proper value
+		// Engine
+		if (v.getEngine().equals("4 Cylinder"))
+			session.setAttribute("selectedV4", "selected");
+		else if (v.getEngine().equals("V6"))
+			session.setAttribute("selectedV6", "selected");
+		else if (v.getEngine().equals("V8"))
+			session.setAttribute("selectedV8", "selected");
+		else if (v.getEngine().equals("V10"))
+			session.setAttribute("selectedV10", "selected");
+		else if (v.getEngine().equals("V12"))
+			session.setAttribute("selectedV12", "selected");
+		else if (v.getEngine().equals("Diesel"))
+			session.setAttribute("selectedD", "selected");
+		// Tranny
+		if (v.getTranny().equals("Manual"))
+			session.setAttribute("selectedM", "selected");
+		else if (v.getTranny().equals("auto"))
+			session.setAttribute("selectedA", "selected");
 	}
 }
