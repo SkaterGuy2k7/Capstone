@@ -47,13 +47,29 @@ public class MechanicServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		String vechId = request.getParameter("vechid");
+		String vechid = request.getParameter("vechid");
 		PrintWriter out = response.getWriter();
+		try {
 
-		if (null != vechId) {
-			out.println(vechId);
-		} else
-			out.println("FUCK");
+			String connectionURL = "jdbc:derby://localhost:1527/sun-appserv-samples;create=true";
+			Connection conn = null;
+			ResultSet rs;
+			conn = DriverManager.getConnection(connectionURL);
+			Statement statement = conn.createStatement();
+			String sql = "SELECT * FROM Vehicle WHERE vechid=" + vechid;
+
+			rs = statement.executeQuery(sql);
+
+			rs.next();
+			Vehicle v = new Vehicle();
+
+			// set rs's to Vehicle v
+			v.setVechid(rs.getInt("vechid"));
+
+		} catch (SQLException e) {
+			out.println(e.getMessage());
+		}
+
 	}
 
 	/**
