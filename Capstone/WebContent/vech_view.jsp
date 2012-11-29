@@ -98,15 +98,14 @@
 						<th>Checklist</th>
 					</tr>
 					<tr>
-						<td>test</td>
-						<td>test</td>
+						
 					</tr>
 				</table>
 			</div>
 		</div>
 
 	</div>
-	<form>
+	<form action="MechanicServlet" method="post">
 	<center>
 	<div>
 	<input type="submit" name="editVehicle" value="Edit Vehicle" />

@@ -13,8 +13,6 @@
 		<img src="ASASLogo.png" />
 	</div>
 
-	<h3 align="center">Profile | Settings</h3>
-
 	<div id=box>
 		<form action="MechanicServlet" method="post">
 			<table>

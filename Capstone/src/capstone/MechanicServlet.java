@@ -65,6 +65,26 @@ public class MechanicServlet extends HttpServlet {
 
 			// set rs's to Vehicle v
 			v.setVechid(rs.getInt("vechid"));
+			v.setUserid(rs.getInt("userid"));
+			v.setCarClass(rs.getString("class"));
+			v.setCarYear(rs.getString("carYear"));
+			v.setMake(rs.getString("make"));
+			v.setModel(rs.getString("model"));
+			v.setColor(rs.getString("color"));
+			v.setVin(rs.getString("vin"));
+			v.setPlate(rs.getString("plate"));
+			v.setEngine(rs.getString("engine"));
+			v.setTranny(rs.getString("tranny"));
+			v.setOdometer(rs.getString("odometer"));
+			v.setOilType(rs.getString("oilType"));
+			v.setDateolc(rs.getString("DateOLC"));
+			v.setStatus(rs.getString("status"));
+
+			session.setAttribute("vehicle", v);
+
+			// NEED TO DO INSPECTIONS
+
+			response.sendRedirect("http://localhost:8080/Capstone/vech_view.jsp");
 
 		} catch (SQLException e) {
 			out.println(e.getMessage());
@@ -373,7 +393,8 @@ public class MechanicServlet extends HttpServlet {
 						session.setAttribute("vehicles", vechList);
 						response.sendRedirect("http://localhost:8080/Capstone/user_view.jsp");
 					} else if (action.equals("editVehicle")) {
-						out.print("EDITEN");
+						Vehicle v = (Vehicle) session.getAttribute("vehicle");
+						session.removeAttribute("vehicle");
 					} else
 						System.out.println("Mashugana");
 				}
@@ -404,6 +425,11 @@ public class MechanicServlet extends HttpServlet {
 
 		} else if (request.getParameter("addVehicle") != null) {
 			session.setAttribute("action", "addVehicle");
+			session.setAttribute("errors", null);
+			response.sendRedirect("http://localhost:8080/Capstone/add_edit.jsp");
+
+		} else if ((request.getParameter("editVehicle") != null)) {
+			session.setAttribute("action", "editVehicle");
 			session.setAttribute("errors", null);
 			response.sendRedirect("http://localhost:8080/Capstone/add_edit.jsp");
 
