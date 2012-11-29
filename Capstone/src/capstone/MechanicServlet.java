@@ -70,6 +70,7 @@ public class MechanicServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		PrintWriter out = response.getWriter();
+		session.setAttribute("error", null);
 		if (request.getParameter("submit") != null) {
 			String user = request.getParameter("userName");
 			String pass = request.getParameter("password");
@@ -102,7 +103,6 @@ public class MechanicServlet extends HttpServlet {
 						if (logged) {
 							session.setAttribute("error",
 									"User is already logged in!");
-							response.sendRedirect("http://localhost:8080/Capstone/Login.jsp");
 						} else {
 							u.setUserid(rs.getInt("userID"));
 							u.setFirstname(rs.getString("firstName"));
@@ -175,10 +175,8 @@ public class MechanicServlet extends HttpServlet {
 				} else
 					out.println("nopass");
 
-				// } catch (ArrayIndexOutOfBoundsException e) {
-				// session.setAttribute("error",
-				// "Username or password is incorrect!");
-				// response.sendRedirect("http://localhost:8080/Capstone/Login.jsp");
+			} catch (ArrayIndexOutOfBoundsException e) {
+				response.sendRedirect("http://localhost:8080/Capstone/Login.jsp");
 			} catch (IllegalStateException e) {
 				out.print(e.getMessage());
 			} catch (SQLException e) {
