@@ -677,7 +677,7 @@ public class MechanicServlet extends HttpServlet {
 
 				statement.close();
 				conn.close();
-
+				session.setAttribute("vehicles", vechList);
 				response.sendRedirect("http://localhost:8080/Capstone/user_view.jsp");
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());
@@ -689,7 +689,9 @@ public class MechanicServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		// Set the dropdowns to proper value
 		// Engine
-		if (v.getEngine().equals("4 Cylinder"))
+		if (null == v.getEngine())
+			clearDropdowns(request);
+		else if (v.getEngine().equals("4 Cylinder"))
 			session.setAttribute("selectedV4", "selected");
 		else if (v.getEngine().equals("V6"))
 			session.setAttribute("selectedV6", "selected");
@@ -700,18 +702,20 @@ public class MechanicServlet extends HttpServlet {
 		else if (v.getEngine().equals("V12"))
 			session.setAttribute("selectedV12", "selected");
 		else if (v.getEngine().equals("Diesel"))
-			session.setAttribute("selectedD", "selected");
+			session.setAttribute("selectedD", "selected");					
 		// Tranny
-		if (v.getTranny().equals("Manual"))
+		if (null == v.getTranny())
+			clearDropdowns(request);
+		else if (v.getTranny().equals("Manual"))
 			session.setAttribute("selectedM", "selected");
 		else if (v.getTranny().equals("auto"))
-			session.setAttribute("selectedA", "selected");
+			session.setAttribute("selectedA", "selected");		
 	}
 
 	private void clearDropdowns(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		// Set the dropdowns to proper value
-		// Engine
+		// Engine		
 		session.setAttribute("selectedV4", null);
 		session.setAttribute("selectedV6", null);
 		session.setAttribute("selectedV8", null);
