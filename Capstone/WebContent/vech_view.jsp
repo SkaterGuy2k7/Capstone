@@ -6,14 +6,27 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" type="text/css" href="style.css" />
 <title>Vehicle View</title>
+<script type="text/javascript">
+	function show_confirm() {
+		var con = confirm("Are you sure you want to delete this vehicle?");
+		if (con == true) {
+			document.btnForm.submit();
+		} else {
+
+		}
+	}
+</script>
+
 </head>
 <body>
 	<div id="logo">
 		<img src="ASASLogo.png" />
 	</div>
-		<div style="float:right"><form action="MechanicServlet" method="post">
-		<input type="submit" value="Logout" name="logout" />
-	</form></div>
+	<div style="float: right">
+		<form action="MechanicServlet" method="post">
+			<input type="submit" value="Logout" name="logout" />
+		</form>
+	</div>
 	<div id="box">
 
 		<div class="tab">
@@ -87,7 +100,7 @@
 		<br /> <br />
 		<div class="tab">
 			<h4>
-				<span class="subtitle">Vechicle</span> Service 
+				<span class="subtitle">Vechicle</span> Service
 			</h4>
 		</div>
 		<div align="center">
@@ -98,21 +111,22 @@
 						<th>Checklist</th>
 					</tr>
 					<tr>
-						
+
 					</tr>
 				</table>
 			</div>
 		</div>
 
 	</div>
-	<form action="MechanicServlet" method="post">
-	<center>
-	<div>
-	<input type="submit" name="editVehicle" value="Edit Vehicle" />
-	<input type="submit" name="delVehicle" value="Delete Vehicle" />
-	<input type="submit" name="servVehicle" value="Service Vehicle" ${disabled}/>
-	</div>
-	</center>
+	<form name="btnForm" action="MechanicServlet" method="post">
+		<center>
+			<div>
+				<input type="submit" name="editVehicle" value="Edit Vehicle" /> <input
+					type="button" onclick="show_confirm()" name="delVehicle"
+					value="Delete Vehicle" /> <input type="submit" name="servVehicle"
+					value="Service Vehicle" ${disabled} />
+			</div>
+		</center>
 	</form>
 </body>
 </html>
