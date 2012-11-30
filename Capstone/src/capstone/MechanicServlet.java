@@ -214,7 +214,7 @@ public class MechanicServlet extends HttpServlet {
 				if (request.getParameter("vehicleModel").equals(""))
 					errors.put("modelError",
 							"Please fill in the model field.<br/>");
-				else if (Pattern.matches("[a-zA-Z]+",
+				else if (Pattern.matches("[a-zA-Z0-9]+",
 						request.getParameter("vehicleModel")) == false)
 					errors.put("modelError", "Please enter a valid model.<br/>");
 				else
@@ -317,6 +317,14 @@ public class MechanicServlet extends HttpServlet {
 
 				// END OF VALIDATION
 
+				// SQL stuff
+				String connectionURL = "jdbc:derby://localhost:1527/sun-appserv-samples;create=true";
+				Connection conn = null;
+
+				conn = DriverManager.getConnection(connectionURL);
+
+				Statement statement = conn.createStatement();
+
 				// If there are errors, go back to add_edit page
 				if (!errors.isEmpty()) {
 					session.setAttribute("errors", errors);
@@ -328,13 +336,6 @@ public class MechanicServlet extends HttpServlet {
 					session.setAttribute("errors", null);
 					// session.setAttribute("vehicle", null);
 					if (action.equals("addVehicle")) {
-
-						String connectionURL = "jdbc:derby://localhost:1527/sun-appserv-samples;create=true";
-						Connection conn = null;
-
-						conn = DriverManager.getConnection(connectionURL);
-
-						Statement statement = conn.createStatement();
 
 						String sql = "insert into vehicle (userID, class, carYear, make, model, color, vin, plate, engine, tranny, odometer, oilType, DateOLC, status) values("
 								+ u.getUserid()
@@ -369,46 +370,11 @@ public class MechanicServlet extends HttpServlet {
 						// Start grabing vehicles in database put to ArrayList
 						// give Arraylist to user_view
 
-						sql = "SELECT * FROM Vehicle WHERE userId="
-								+ u.getUserid();
-						ResultSet rs = statement.executeQuery(sql);
-						ArrayList<Vehicle> vechList = new ArrayList<Vehicle>();
-
-						while (rs.next()) {
-							Vehicle v = new Vehicle();
-							v.setVechid(rs.getInt("vechID"));
-							v.setUserid(rs.getInt("userID"));
-							v.setCarClass(rs.getString("class"));
-							v.setCarYear(rs.getString("carYear"));
-							v.setMake(rs.getString("make"));
-							v.setModel(rs.getString("model"));
-							v.setColor(rs.getString("color"));
-							v.setVin(rs.getString("vin"));
-							v.setPlate(rs.getString("plate"));
-							v.setEngine(rs.getString("engine"));
-							v.setTranny(rs.getString("Tranny"));
-							v.setOdometer(rs.getString("odometer"));
-							v.setOilType(rs.getString("oilType"));
-							v.setDateolc(rs.getString("DateOLC"));
-							v.setStatus(rs.getString("status"));
-
-							vechList.add(v);
-						}
-
 						statement.close();
 						conn.close();
 
-						session.setAttribute("vehicles", vechList);
-						response.sendRedirect("http://localhost:8080/Capstone/user_view.jsp");
 					} else if (action.equals("editVehicle")) {
 						Vehicle v = (Vehicle) session.getAttribute("vehicle");
-
-						String connectionURL = "jdbc:derby://localhost:1527/sun-appserv-samples;create=true";
-						Connection conn = null;
-
-						conn = DriverManager.getConnection(connectionURL);
-
-						Statement statement = conn.createStatement();
 
 						// UPDATE Vehicle
 						String sql = "UPDATE Vehicle SET class='"
@@ -438,10 +404,37 @@ public class MechanicServlet extends HttpServlet {
 								+ "WHERE vechID=" + v.getVechid();
 
 						statement.executeUpdate(sql);
-
-						response.sendRedirect("http://localhost:8080/Capstone/user_view.jsp");
 					} else
 						System.out.println("Mashugana");
+
+					String sql = "SELECT * FROM Vehicle WHERE userId="
+							+ u.getUserid();
+					ResultSet rs = statement.executeQuery(sql);
+					ArrayList<Vehicle> vechList = new ArrayList<Vehicle>();
+
+					while (rs.next()) {
+						Vehicle v = new Vehicle();
+						v.setVechid(rs.getInt("vechID"));
+						v.setUserid(rs.getInt("userID"));
+						v.setCarClass(rs.getString("class"));
+						v.setCarYear(rs.getString("carYear"));
+						v.setMake(rs.getString("make"));
+						v.setModel(rs.getString("model"));
+						v.setColor(rs.getString("color"));
+						v.setVin(rs.getString("vin"));
+						v.setPlate(rs.getString("plate"));
+						v.setEngine(rs.getString("engine"));
+						v.setTranny(rs.getString("Tranny"));
+						v.setOdometer(rs.getString("odometer"));
+						v.setOilType(rs.getString("oilType"));
+						v.setDateolc(rs.getString("DateOLC"));
+						v.setStatus(rs.getString("status"));
+
+						vechList.add(v);
+					}
+
+					session.setAttribute("vehicles", vechList);
+					response.sendRedirect("http://localhost:8080/Capstone/user_view.jsp");
 				}
 			} catch (NullPointerException e) {
 				errors.put("nullError", e.getMessage());
@@ -467,6 +460,7 @@ public class MechanicServlet extends HttpServlet {
 			}
 
 		} else if (request.getParameter("addVehicle") != null) {
+			session.setAttribute("vehicle", null);
 			session.setAttribute("action", "addVehicle");
 			session.setAttribute("errors", null);
 			response.sendRedirect("http://localhost:8080/Capstone/add_edit.jsp");
