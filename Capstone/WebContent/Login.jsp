@@ -33,7 +33,7 @@
 		<hr />
 	</div>
 	<div style="float: right">
-		<a href="register.xhtml">Register New User</a>
+		<a href="register.jsp">Register New User</a>
 	</div>
 	<center>
 		<h2>Welcome to ASAS Industries Maintenance Tracker</h2>

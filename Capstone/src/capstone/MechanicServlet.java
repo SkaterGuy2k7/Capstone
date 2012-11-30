@@ -367,6 +367,8 @@ public class MechanicServlet extends HttpServlet {
 								+ newVech.getStatus() + "')";
 						statement.executeUpdate(sql);
 
+						session.setAttribute("vehicle", newVech);
+
 						// Start grabing vehicles in database put to ArrayList
 						// give Arraylist to user_view
 
@@ -629,6 +631,53 @@ public class MechanicServlet extends HttpServlet {
 
 			response.sendRedirect("newUser.jsp");
 
+		} else {
+			try {
+				String connectionURL = "jdbc:derby://localhost:1527/sun-appserv-samples;create=true";
+				Connection conn = null;
+				ResultSet rs;
+				conn = DriverManager.getConnection(connectionURL);
+				Statement statement = conn.createStatement();
+
+				Vehicle v = (Vehicle) session.getAttribute("vehicle");
+
+				String sql = "DELETE FROM Vehicle WHERE vechID="
+						+ v.getVechid();
+
+				User u = (User) session.getAttribute("user");
+
+				sql = "SELECT * FROM Vehicle WHERE userId=" + u.getUserid();
+				rs = statement.executeQuery(sql);
+				ArrayList<Vehicle> vechList = new ArrayList<Vehicle>();
+
+				while (rs.next()) {
+					v = new Vehicle();
+					v.setVechid(rs.getInt("vechID"));
+					v.setUserid(rs.getInt("userID"));
+					v.setCarClass(rs.getString("class"));
+					v.setCarYear(rs.getString("carYear"));
+					v.setMake(rs.getString("make"));
+					v.setModel(rs.getString("model"));
+					v.setColor(rs.getString("color"));
+					v.setVin(rs.getString("vin"));
+					v.setPlate(rs.getString("plate"));
+					v.setEngine(rs.getString("engine"));
+					v.setTranny(rs.getString("Tranny"));
+					v.setOdometer(rs.getString("odometer"));
+					v.setOilType(rs.getString("oilType"));
+					v.setDateolc(rs.getString("DateOLC"));
+					v.setStatus(rs.getString("status"));
+
+					vechList.add(v);
+				}
+
+				statement.close();
+				conn.close();
+
+				response.sendRedirect("http://localhost:8080/Capstone/user_view.jsp");
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
 		}
 	}
 
