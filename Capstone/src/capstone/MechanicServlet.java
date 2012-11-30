@@ -475,8 +475,14 @@ public class MechanicServlet extends HttpServlet {
 			session.setAttribute("errors", null);
 			response.sendRedirect("http://localhost:8080/Capstone/add_edit.jsp");
 
-		} else if ((request.getParameter("servVehicle") != null)) {
-			// User user = (User) session.getAttribute("user");
+		} else if ((request.getParameter("servVehicle") != null)) {			
+			response.sendRedirect("http://localhost:8080/Capstone/checkList.jsp");
+
+		} else if ((request.getParameter("checkReset") != null)) {			
+			response.sendRedirect("http://localhost:8080/Capstone/checkList.jsp");
+
+		} else if ((request.getParameter("checkSubmit") != null)) {			
+			//Do Stuff
 
 		} else if (request.getParameter("logout") != null) {
 			session.setAttribute("user", null);
