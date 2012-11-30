@@ -189,7 +189,7 @@ public class MechanicServlet extends HttpServlet {
 			}
 
 		} else if (request.getParameter("changeVehicle") != null) {
-			// run add vehicle code
+
 			Map<String, String> errors = new HashMap<String, String>(10);
 			Vehicle newVech = new Vehicle();
 			User u = (User) session.getAttribute("user");
@@ -460,11 +460,13 @@ public class MechanicServlet extends HttpServlet {
 				setDropdowns(request, newVech);
 				response.sendRedirect("http://localhost:8080/Capstone/add_edit.jsp");
 			}
+			out.println("FUCK");
 
 		} else if (request.getParameter("addVehicle") != null) {
 			session.setAttribute("vehicle", null);
 			session.setAttribute("action", "addVehicle");
 			session.setAttribute("errors", null);
+			clearDropdowns(request);
 			response.sendRedirect("http://localhost:8080/Capstone/add_edit.jsp");
 
 		} else if ((request.getParameter("editVehicle") != null)) {
@@ -644,6 +646,8 @@ public class MechanicServlet extends HttpServlet {
 				String sql = "DELETE FROM Vehicle WHERE vechID="
 						+ v.getVechid();
 
+				statement.executeUpdate(sql);
+
 				User u = (User) session.getAttribute("user");
 
 				sql = "SELECT * FROM Vehicle WHERE userId=" + u.getUserid();
@@ -702,5 +706,20 @@ public class MechanicServlet extends HttpServlet {
 			session.setAttribute("selectedM", "selected");
 		else if (v.getTranny().equals("auto"))
 			session.setAttribute("selectedA", "selected");
+	}
+
+	private void clearDropdowns(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		// Set the dropdowns to proper value
+		// Engine
+		session.setAttribute("selectedV4", null);
+		session.setAttribute("selectedV6", null);
+		session.setAttribute("selectedV8", null);
+		session.setAttribute("selectedV10", null);
+		session.setAttribute("selectedV12", null);
+		session.setAttribute("selectedD", null);
+		// Tranny
+		session.setAttribute("selectedM", null);
+		session.setAttribute("selectedA", null);
 	}
 }
