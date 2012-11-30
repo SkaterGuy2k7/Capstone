@@ -326,7 +326,7 @@ public class MechanicServlet extends HttpServlet {
 				} else { // else add vehicle to database and go to user_view
 							// page
 					session.setAttribute("errors", null);
-					session.setAttribute("vehicle", null);
+					// session.setAttribute("vehicle", null);
 					if (action.equals("addVehicle")) {
 
 						String connectionURL = "jdbc:derby://localhost:1527/sun-appserv-samples;create=true";
@@ -402,16 +402,49 @@ public class MechanicServlet extends HttpServlet {
 						response.sendRedirect("http://localhost:8080/Capstone/user_view.jsp");
 					} else if (action.equals("editVehicle")) {
 						Vehicle v = (Vehicle) session.getAttribute("vehicle");
-						session.removeAttribute("vehicle");
+
+						String connectionURL = "jdbc:derby://localhost:1527/sun-appserv-samples;create=true";
+						Connection conn = null;
+
+						conn = DriverManager.getConnection(connectionURL);
+
+						Statement statement = conn.createStatement();
+
+						// UPDATE Vehicle
+						String sql = "UPDATE Vehicle SET class='"
+								+ request.getParameter("vehicleClass")
+								+ "', carYear='"
+								+ request.getParameter("vehicleYear")
+								+ "', make='"
+								+ request.getParameter("vehicleMake")
+								+ "', model='"
+								+ request.getParameter("vehicleModel")
+								+ "', color='"
+								+ request.getParameter("vehicleColor")
+								+ "', vin='"
+								+ request.getParameter("vehicleVIN")
+								+ "', plate='"
+								+ request.getParameter("vehiclePlate")
+								+ "', engine='"
+								+ request.getParameter("engineType")
+								+ "', tranny='"
+								+ request.getParameter("transmissionType")
+								+ "', odometer='"
+								+ request.getParameter("vehicleOdometer")
+								+ "', oilType='"
+								+ request.getParameter("oilType")
+								+ "', DateOLC='"
+								+ request.getParameter("DateOfChange") + "' "
+								+ "WHERE vechID=" + v.getVechid();
+
+						statement.executeUpdate(sql);
+
+						response.sendRedirect("http://localhost:8080/Capstone/user_view.jsp");
 					} else
 						System.out.println("Mashugana");
 				}
-				// For some reason when this button is pushed and there are no
-				// errors, the page isnt redirected. It instead goes out of the
-				// if statement that checks action attribute
-				// which is a blank page...
 			} catch (NullPointerException e) {
-				session.setAttribute("action", "addVehicle");
+				errors.put("nullError", e.getMessage());
 				session.setAttribute("errors", errors);
 				setDropdowns(request, newVech);
 				session.setAttribute("vehicle", newVech);
@@ -423,7 +456,6 @@ public class MechanicServlet extends HttpServlet {
 				session.setAttribute("vehicle", newVech);
 				response.sendRedirect("http://localhost:8080/Capstone/add_edit.jsp");
 			} catch (SQLException e) {
-				e.getMessage();
 				System.out.println(e.getMessage());
 			} catch (ParseException e) {
 				errors.put("docError",

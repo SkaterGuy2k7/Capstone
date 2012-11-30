@@ -13,6 +13,8 @@
 		<img src="ASASLogo.png" />
 	</div>
 
+<span class="error">${errors.nullError}</span>
+
 	<div id=box>
 		<form action="MechanicServlet" method="post">
 			<table>
@@ -96,7 +98,7 @@
 			</table>
 		</form>
 	</div>
-	<a href="Login.xhtml" />Login Page
+	<a href="Login.jsp" />Login Page
 	</a>
 </body>
 </html>
