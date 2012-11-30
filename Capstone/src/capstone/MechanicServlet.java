@@ -192,9 +192,11 @@ public class MechanicServlet extends HttpServlet {
 
 			Map<String, String> errors = new HashMap<String, String>(10);
 			Vehicle newVech = new Vehicle();
+			String action = (String) session.getAttribute("action");
+			if (action.equals("editVehicle"))
+				newVech = (Vehicle) session.getAttribute("vehicle");
 			User u = (User) session.getAttribute("user");
 			try {
-				String action = (String) session.getAttribute("action");
 
 				newVech.setUserid(u.getUserid());
 				newVech.setStatus("Y");
@@ -234,14 +236,16 @@ public class MechanicServlet extends HttpServlet {
 							"Please fill in the vehicle year field.<br/>");
 				else if (Pattern.matches("[a-zA-Z]+",
 						request.getParameter("vehicleYear")) == true
-						&& request.getParameter("vehicleYear").length() != 4) {
+						|| request.getParameter("vehicleYear").length() != 4)
 					errors.put("carYearError",
 							"Please enter a valid vehicle year.<br/>");
+				else {
 					if (Integer.parseInt(request.getParameter("vehicleYear")) < 1900)
 						errors.put("carYearError",
 								"Please enter a valid vehicle year.<br/>");
-				} else
-					newVech.setCarYear(request.getParameter("vehicleYear"));
+					else
+						newVech.setCarYear(request.getParameter("vehicleYear"));
+				}
 				// Engine Validation
 				if (request.getParameter("engineType").equals("Select engine"))
 					errors.put("engineError",
@@ -331,7 +335,9 @@ public class MechanicServlet extends HttpServlet {
 				// If there are errors, go back to add_edit page
 				if (!errors.isEmpty()) {
 					session.setAttribute("errors", errors);
+					int fuck2 = newVech.getVechid();
 					session.setAttribute("vehicle", newVech);
+					int fuck = newVech.getVechid();
 					setDropdowns(request, newVech);
 					response.sendRedirect("http://localhost:8080/Capstone/add_edit.jsp");
 				} else { // else add vehicle to database and go to user_view
@@ -374,6 +380,8 @@ public class MechanicServlet extends HttpServlet {
 
 					} else if (action.equals("editVehicle")) {
 						Vehicle v = (Vehicle) session.getAttribute("vehicle");
+
+						int fuck = v.getVechid();
 
 						// UPDATE Vehicle
 						String sql = "UPDATE Vehicle SET class='"
@@ -461,7 +469,6 @@ public class MechanicServlet extends HttpServlet {
 				setDropdowns(request, newVech);
 				response.sendRedirect("http://localhost:8080/Capstone/add_edit.jsp");
 			}
-			out.println("FUCK");
 
 		} else if (request.getParameter("addVehicle") != null) {
 			session.setAttribute("vehicle", null);
