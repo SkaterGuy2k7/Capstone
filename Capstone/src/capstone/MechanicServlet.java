@@ -232,12 +232,15 @@ public class MechanicServlet extends HttpServlet {
 				if (request.getParameter("vehicleYear").equals(""))
 					errors.put("carYearError",
 							"Please fill in the vehicle year field.<br/>");
-				else if (Pattern.matches("[0-9]+",
-						request.getParameter("vehicleYear")) == false
-						&& request.getParameter("vehicleYear").length() != 4)
+				else if (Pattern.matches("[a-zA-Z]+",
+						request.getParameter("vehicleYear")) == true
+						&& request.getParameter("vehicleYear").length() != 4) {
 					errors.put("carYearError",
 							"Please enter a valid vehicle year.<br/>");
-				else
+					if (Integer.parseInt(request.getParameter("vehicleYear")) < 1900)
+						errors.put("carYearError",
+								"Please enter a valid vehicle year.<br/>");
+				} else
 					newVech.setCarYear(request.getParameter("vehicleYear"));
 				// Engine Validation
 				if (request.getParameter("engineType").equals("Select engine"))
@@ -369,12 +372,6 @@ public class MechanicServlet extends HttpServlet {
 
 						session.setAttribute("vehicle", newVech);
 
-						// Start grabing vehicles in database put to ArrayList
-						// give Arraylist to user_view
-
-						statement.close();
-						conn.close();
-
 					} else if (action.equals("editVehicle")) {
 						Vehicle v = (Vehicle) session.getAttribute("vehicle");
 
@@ -435,6 +432,8 @@ public class MechanicServlet extends HttpServlet {
 						vechList.add(v);
 					}
 
+					conn.close();
+					statement.close();
 					session.setAttribute("vehicles", vechList);
 					response.sendRedirect("http://localhost:8080/Capstone/user_view.jsp");
 				}
@@ -445,13 +444,15 @@ public class MechanicServlet extends HttpServlet {
 				session.setAttribute("vehicle", newVech);
 				response.sendRedirect("http://localhost:8080/Capstone/add_edit.jsp");
 			} catch (NumberFormatException e) {
-				errors.put("odoError", "Please enter a positive number.<br/>");
+				errors.put("odoError",
+						"Please enter a positive odometer number.<br/>");
 				session.setAttribute("errors", errors);
 				setDropdowns(request, newVech);
 				session.setAttribute("vehicle", newVech);
 				response.sendRedirect("http://localhost:8080/Capstone/add_edit.jsp");
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());
+
 			} catch (ParseException e) {
 				errors.put("docError",
 						"Please enter the date in the following format: MM/dd/yyyy<br/>");
@@ -702,20 +703,20 @@ public class MechanicServlet extends HttpServlet {
 		else if (v.getEngine().equals("V12"))
 			session.setAttribute("selectedV12", "selected");
 		else if (v.getEngine().equals("Diesel"))
-			session.setAttribute("selectedD", "selected");					
+			session.setAttribute("selectedD", "selected");
 		// Tranny
 		if (null == v.getTranny())
 			clearDropdowns(request);
 		else if (v.getTranny().equals("Manual"))
 			session.setAttribute("selectedM", "selected");
 		else if (v.getTranny().equals("auto"))
-			session.setAttribute("selectedA", "selected");		
+			session.setAttribute("selectedA", "selected");
 	}
 
 	private void clearDropdowns(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		// Set the dropdowns to proper value
-		// Engine		
+		// Engine
 		session.setAttribute("selectedV4", null);
 		session.setAttribute("selectedV6", null);
 		session.setAttribute("selectedV8", null);
