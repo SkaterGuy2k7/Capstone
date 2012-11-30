@@ -484,50 +484,154 @@ public class MechanicServlet extends HttpServlet {
 
 		else if (request.getParameter("checkSubmit") != null)
 			response.sendRedirect("http://localhost:8080/Capstone/Vehicle_Invoice.jsp");
-
+		// Creating the user and adding them to the database
 		else if (request.getParameter("createUser") != null) {
-			// userType = request.getParameter("userTypeDD");
-			// userName = request.getParameter("userName");
-			// password = request.getParameter("password");
-			// retypePass = request.getParameter("retypePass");
-			// emailAddy = request.getParameter("emailAddy");
-			// firstName = request.getParameter("firstName");
-			// lastName = request.getParameter("lastName");
-			// address = request.getParameter("address");
-			// city = request.getParameter("city");
-			// province = request.getParameter("province");
-			// postalCode = request.getParameter("postalCode");
-			// phone = request.getParameter("phone");
-			// fax = request.getParameter("fax");
-			//
-			// session = request.getSession(true);
-			//
-			// /*
-			// * String firstname, String lastname, String address, String city,
-			// * String province, String postal, String phone, String fax,
-			// String
-			// * email, String username, String password, String usertype
-			// */
-			//
-			// User newUser = new User(firstName, lastName, address, city,
-			// province, postalCode, phone, fax, emailAddy, userName,
-			// password, userType);
-			// if (!session.isNew()) {
-			// newUserList = (ArrayList<User>) session
-			// .getAttribute("statename");
-			// } else {
-			// newUserList = new ArrayList<User>();
-			// }
-			// if (newUserList == null) {
-			// newUserList = new ArrayList<User>();
-			// }
-			// newUserList.add(newUser);
-			// session.setAttribute("statename", newUserList);
-			// session.setAttribute("buttonPressed", "createUser");
-			//
-			// RequestDispatcher rd =
-			// request.getRequestDispatcher("newUser.jsp");
-			// rd.forward(request, response);
+			Map<String, String> userErrors = new HashMap<String, String>(10);
+			try {
+				String connectionURL = "jdbc:derby://localhost:1527/sun-appserv-samples;create=true";
+				Connection conn = null;
+				ResultSet rs;
+				conn = DriverManager.getConnection(connectionURL);
+				Statement statement = conn.createStatement();
+				User u = new User();
+				String sql = "SELECT * FROM User";
+
+				rs = statement.executeQuery(sql);
+				// Validation for creating user
+				while (rs.next()) {
+					if (request.getParameter("userTypeDD").equals("Choose")) {
+						userErrors.put("typeError",
+								"Please choose the customer type");
+					} else {
+						u.setUsertype(request.getParameter("userTypeDD"));
+					}
+					if (request.getParameter("userName").equals(null)
+							&& rs.getString("userName").equals(
+									request.getParameter("userName"))) {
+						userErrors.put("userError",
+								"Please enter a valid User Name");
+					} else {
+						u.setUsername(request.getParameter("userName"));
+					}
+					if (request.getParameter("password").equals(null)
+							&& !request.getParameter("password").equals(
+									request.getParameter("retypePass"))) {
+						userErrors.put("passError", "Please enter a password");
+						userErrors.put("rePass",
+								"Please enter a matching password!");
+					} else {
+						u.setPassword(request.getParameter("password"));
+					}
+					if (request.getParameter("emailAddy").equals(null)) {
+						userErrors.put("emailError",
+								"Please enter a email address");
+					} else if (rs.getString("email").equals(
+							request.getParameter("emailAddy"))) {
+						userErrors
+								.put("errorsSQLEmail",
+										"Email already exsists, Please login or use other email address!");
+					} else {
+						u.setEmail(request.getParameter("email"));
+					}
+					if (request.getParameter("firstName").equals(null)) {
+						userErrors.put("firstError",
+								"Please enter your first name");
+					} else {
+						u.setFirstname(request.getParameter("firstName"));
+					}
+					if (request.getParameter("lastName").equals(null)) {
+						userErrors.put("lastError",
+								"Please enter your last name");
+					} else {
+						u.setLastname(request.getParameter("lastName"));
+					}
+					if (request.getParameter("address").equals(null)) {
+						userErrors
+								.put("addyError", "Please enter your address");
+					} else {
+						u.setAddress(request.getParameter("address"));
+					}
+					if (request.getParameter("city").equals(null)) {
+						userErrors.put("cityError", "Please enter your city");
+					} else {
+						u.setCity(request.getParameter("city"));
+					}
+					if (request.getParameter("province").equals(null)) {
+						userErrors.put("provError",
+								"Please enter your province");
+					} else {
+						u.setProvince(request.getParameter("province"));
+					}
+					if (request.getParameter("postalCode").equals(null)
+							&& request.getParameter("postalCode").length() != 6) {
+						userErrors.put("postalError",
+								"Please enter a valid postal code");
+					} else {
+						u.setPostal(request.getParameter("postalCode"));
+					}
+					if (request.getParameter("phone").equals(null)
+							&& request.getParameter("phone").length() != 10
+							&& Pattern.matches("[0-9]+",
+									request.getParameter("phone")) == false) {
+						userErrors.put("phoneError",
+								"Please enter a valid phone Number");
+					} else {
+						u.setPhone(request.getParameter("phone"));
+					}
+					if (request.getParameter("fax").length() != 10
+							&& Pattern.matches("[0-9]+",
+									request.getParameter("fax")) == false) {
+						userErrors.put("faxError",
+								"please enter a valid fax number");
+					} else {
+						u.setFax(request.getParameter("fax"));
+					}
+					if (!userErrors.isEmpty()) {
+						request.setAttribute("errors", userErrors);
+						response.sendRedirect("register.xhtml");
+					} else {
+						sql = "INSERT INTO Users(firstName, lastName, address, city, province, postal, phone, fax, email, userName, password, userType) VALUES('"
+								+ u.getFirstname()
+								+ "','"
+								+ u.getLastname()
+								+ "',"
+								+ "+ '"
+								+ u.getAddress()
+								+ "','"
+								+ u.getCity()
+								+ "','"
+								+ u.getProvince()
+								+ "','"
+								+ u.getPostal()
+								+ "','"
+								+ u.getPhone()
+								+ "','"
+								+ u.getFax()
+								+ "','"
+								+ u.getEmail()
+								+ "','"
+								+ u.getUsername()
+								+ "','"
+								+ u.getPassword()
+								+ "','" + u.getUsertype() + "');";
+						statement.executeUpdate(sql);
+					}
+
+				}
+				statement.close();
+				conn.close();
+			} catch (SQLException e) {
+				out.print(e.getMessage());
+			}
+
+			/*
+			 * String firstname, String lastname, String address, String city,
+			 * String province, String postal, String phone, String fax, String
+			 * email, String username, String password, String usertype
+			 */
+			session.setAttribute("buttonPressed", "createUser");
+
+			response.sendRedirect("newUser.jsp");
 
 		}
 	}

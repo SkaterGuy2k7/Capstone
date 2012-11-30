@@ -21,32 +21,32 @@
 			</tr>
 			<tr>
 				<td>User Type:</td>
-				<td><select name="userTypeDD">
+				<td><select name="userTypeDD"></td>
 						<option value="Choose">Choose</option>
 						<option value="customer">Customer</option>
 						<option value="mechanic">Mechanic</option>
 						<option value="persMechanic">Personal Mechanic</option>
-				</select></td>
+				</select></td><span class="error">${errors.typeError}</span>
 			</tr>
 			<tr>
 				<td>User Name:</td>
 				<td><input type="text" name="userName" id="userName"
-					style="width: 125px; height: 25px" /></td>
+					style="width: 125px; height: 25px" /></td><span class="error">${errors.userError}</span>
 			</tr>
 			<tr>
 				<td>Password:</td>
 				<td><input type="password" name="password" id="password"
-					style="width: 125px; height: 25px" /></td>
+					style="width: 125px; height: 25px" /></td><span class="error">${errors.passError}</span>
 			</tr>
 			<tr>
 				<td>Retype Password:</td>
 				<td><input type="password" name="retypePass" id="retypePass"
-					style="width: 125px; height: 25px" /></td>
+					style="width: 125px; height: 25px" /></td><span class="error">${errors.rePass}</span>
 			</tr>
 			<tr>
 				<td>Email Address:</td>
 				<td><input type="text" name="emailAddy" id="emailAddy"
-					style="width: 200px; height: 25px" /></td>
+					style="width: 200px; height: 25px" /></td><span class="error">${errors.emailError}</span>
 			</tr>
 			<tr>
 				<th colspan="2">User Information</th>
@@ -54,21 +54,21 @@
 			<tr>
 				<td>First Name:</td>
 				<td><input type="text" name="firstName"
-					style="width: 125px; height: 25px" /></td>
+					style="width: 125px; height: 25px" /></td><span class="error">${errors.firstError}</span>
 			</tr>
 			<tr>
 				<td>Last Name:</td>
 				<td><input type="text" name="lastName"
-					style="width: 125px; height: 25px" /></td>
+					style="width: 125px; height: 25px" /></td><span class="error">${errors.lastError}</span>
 			</tr>
 			<tr>
 				<td>Address:</td>
-				<textarea cols="20" rows="2" name="address"></textarea>
+				<textarea cols="20" rows="2" name="address"></textarea><span class="error">${errors.addyError}</span>
 			</tr>
 			<tr>
 				<td>City:</td>
 				<td><input type="text" name="city"
-					style="width: 125px; height: 25px" /></td>
+					style="width: 125px; height: 25px" /></td><span class="error">${errors.cityError}</span>
 			</tr>
 			<tr>
 				<td>Province:</td>
@@ -86,22 +86,22 @@
 						<option value="Yukon">Yukon</option>
 						<option value="Prince Edward Island">Prince Edward Island</option>
 						<option value="New Brunswick">New Brunswick</option>
-				</select></td>
+				</select></td><span class="error">${errors.provError}</span>
 			</tr>
 			<tr>
 				<td>Postal Code:</td>
 				<td><input type="text" name="postalCode"
-					style="width: 75px; height: 25px" /></td>
+					style="width: 75px; height: 25px" /></td><span class="error">${errors.postalError}</span>
 			</tr>
 			<tr>
 				<td>Phone:</td>
 				<td><input type="text" name="phone"
-					style="widht: 80px; height: 25px" /></td>
+					style="widht: 80px; height: 25px" /></td><span class="error">${errors.phoneError}</span>
 			</tr>
 			<tr>
 				<td>Fax:</td>
 				<td><input type="text" name="fax"
-					style="widht: 80px; height: 25px" /></td>
+					style="widht: 80px; height: 25px" /></td><span class="error">${errors.faxError}</span>
 			</tr>
 			<tr>
 				<td><input type="submit" name="createUser" value="Create User" /></td>
