@@ -90,37 +90,46 @@ public class MechanicServlet extends HttpServlet {
 
 			rs = statement.executeQuery(sql);
 
-			rs.next();
-			Inspection i = new Inspection();
+			// check if rs has data
+			// if it does send an arrayList of inspections to vech view
+			// if it doesn't just go to vech_view
+			ArrayList<Inspection> inspects = new ArrayList<Inspection>();
+			while (rs.next()) {
 
-			// set rs's to Vehicle v
-			i.setVechid(rs.getInt("vechid"));
-			i.setInspectid(rs.getInt("inspectid"));
-			i.setDateoi(rs.getString("dateoi"));
-			i.setNotes(rs.getString("notes"));
-			i.setTpress(rs.getString("tpress"));
-			i.setCataconv(rs.getString("cataconv"));
-			i.setMuffpipes(rs.getString("muffpipes"));
-			i.setExhclamhang(rs.getString("exhclamhang"));
-			i.setFuelfilter(rs.getString("fuelfilter"));
-			i.setEnginefilter(rs.getString("enginefilter"));
-			i.setCabinfilter(rs.getString("cabinfilter"));
-			i.setBrakeline(rs.getString("brakeline"));
-			i.setGaskets(rs.getString("gaskets"));
-			i.setHoses(rs.getString("hoses"));
-			i.setBelts(rs.getString("belts"));
-			i.setWashfluid(rs.getString("washfluid"));
-			i.setDifffluid(rs.getString("difffluid"));
-			i.setBrakefluid(rs.getString("brakefluid"));
-			i.setSteerfluid(rs.getString("steerfluid"));
-			i.setCoolfluid(rs.getString("coolfluid"));
-			i.setTranfluid(rs.getString("tranfluid"));
-			i.setWipeblades(rs.getString("wipeblades"));
-			i.setHorn(rs.getString("horn"));
-			i.setInlights(rs.getString("inlights"));
-			i.setExlights(rs.getString("exlights"));
+				Inspection i = new Inspection();
 
-			session.setAttribute("inspection", i);
+				// set rs's to Vehicle v
+				i.setVechid(rs.getInt("vechid"));
+				i.setInspectid(rs.getInt("inspectid"));
+				i.setDateoi(rs.getString("dateoi"));
+				i.setNotes(rs.getString("notes"));
+				i.setTpress(rs.getString("tpress"));
+				i.setCataconv(rs.getString("cataconv"));
+				i.setMuffpipes(rs.getString("muffpipes"));
+				i.setExhclamhang(rs.getString("exhclamhang"));
+				i.setFuelfilter(rs.getString("fuelfilter"));
+				i.setEnginefilter(rs.getString("enginefilter"));
+				i.setCabinfilter(rs.getString("cabinfilter"));
+				i.setBrakeline(rs.getString("brakeline"));
+				i.setGaskets(rs.getString("gaskets"));
+				i.setHoses(rs.getString("hoses"));
+				i.setBelts(rs.getString("belts"));
+				i.setWashfluid(rs.getString("washfluid"));
+				i.setDifffluid(rs.getString("difffluid"));
+				i.setBrakefluid(rs.getString("brakefluid"));
+				i.setSteerfluid(rs.getString("steerfluid"));
+				i.setCoolfluid(rs.getString("coolfluid"));
+				i.setTranfluid(rs.getString("tranfluid"));
+				i.setWipeblades(rs.getString("wipeblades"));
+				i.setHorn(rs.getString("horn"));
+				i.setInlights(rs.getString("inlights"));
+				i.setExlights(rs.getString("exlights"));
+
+				inspects.add(i);
+			}
+
+			session.setAttribute("inspects", inspects);
+
 			// disable Service button if Customer
 			if (u.getUsertype().equals("Cust"))
 				session.setAttribute("disabled", "disabled");

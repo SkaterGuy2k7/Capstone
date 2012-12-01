@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+<%@ page import="capstone.*, java.util.*" language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -110,14 +110,20 @@
 						<th>Date</th>
 						<th>Checklist</th>
 					</tr>
+					<%
+						ArrayList<Inspection> inspects = (ArrayList<Inspection>)session.getAttribute("inspects");
+					//if insepcts is not null populate the table
+					//else leave empty
+						if(null != inspects)
+						{
+							for(Inspection i : inspects)
+							{
+								//out.println("<tr><td>"+i.getDateoi()+"</td><td>"+i.get);
+							}
+						}
+					%>
 				</table>
 			</div>
-			<table>
-				<tr>
-					<th>${inspection.getDateoi()}</th>
-					<th><a href="checkList.jsp">CheckList</a></th>
-				</tr>
-			</table>
 		</div>
 	</div>
 	<form name="btnForm" action="MechanicServlet" method="post">
