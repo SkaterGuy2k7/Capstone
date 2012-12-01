@@ -34,7 +34,7 @@
 	}
 %>
 <div style="float: center">
-<a href="register.xhtml">Register Another User</a>
+<a href="register.jsp">Register Another User</a>
 </div>
 </body>
 </html>

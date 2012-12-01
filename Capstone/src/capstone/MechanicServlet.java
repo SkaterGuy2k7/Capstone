@@ -660,7 +660,7 @@ public class MechanicServlet extends HttpServlet {
 								.put("errorsSQLEmail",
 										"Email already exsists, Please login or use other email address!");
 					} else {
-						u.setEmail(request.getParameter("email"));
+						u.setEmail(request.getParameter("emailAddy"));
 					}
 					if (request.getParameter("firstName").equals("")) {
 						userErrors.put("firstError",
@@ -717,14 +717,13 @@ public class MechanicServlet extends HttpServlet {
 					}
 					if (!userErrors.isEmpty()) {
 						request.setAttribute("errors", userErrors);
-						response.sendRedirect("register.xhtml");
+						response.sendRedirect("register.jsp");
 					} else {
 						sql = "INSERT INTO Users(firstName, lastName, address, city, province, postal, phone, fax, email, userName, password, userType) VALUES('"
 								+ u.getFirstname()
 								+ "','"
 								+ u.getLastname()
-								+ "',"
-								+ "+ '"
+								+ "','"
 								+ u.getAddress()
 								+ "','"
 								+ u.getCity()
@@ -742,17 +741,15 @@ public class MechanicServlet extends HttpServlet {
 								+ u.getUsername()
 								+ "','"
 								+ u.getPassword()
-								+ "','" + u.getUsertype() + "');";
+								+ "','" + u.getUsertype() + "')";
 						statement.executeUpdate(sql);
-						System.out.println(rs.getString("email"));
-						System.out.println(request.getParameter("emailAddy"));
 					}
 
 				}
 				statement.close();
 				conn.close();
 			} catch (SQLException e) {
-				out.print(e.getMessage());
+				System.out.println(e.getMessage());
 			}
 
 			/*
