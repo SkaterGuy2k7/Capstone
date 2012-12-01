@@ -21,7 +21,7 @@
 			</tr>
 			<tr>
 				<td>User Type:</td>
-				<td><select name="userTypeDD"></td>
+				<td><select name="userTypeDD">
 						<option value="Choose">Choose</option>
 						<option value="customer">Customer</option>
 						<option value="mechanic">Mechanic</option>
@@ -63,7 +63,7 @@
 			</tr>
 			<tr>
 				<td>Address:</td>
-				<textarea cols="20" rows="2" name="address"></textarea><span class="error">${errors.addyError}</span>
+				<td><textarea cols="20" rows="2" name="address"></textarea></td><span class="error">${errors.addyError}</span>
 			</tr>
 			<tr>
 				<td>City:</td>
