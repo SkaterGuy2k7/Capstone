@@ -539,6 +539,9 @@ public class MechanicServlet extends HttpServlet {
 		} else if ((request.getParameter("checkReset") != null)) {
 			response.sendRedirect("http://localhost:8080/Capstone/checkList.jsp");
 
+		} else if (request.getParameter("invoices") != null) {
+			response.sendRedirect("http://localhost:8080/Capstone/invoice_list.jsp");
+
 		} else if ((request.getParameter("checkSubmit") != null)) {
 			try {
 				String connectionURL = "jdbc:derby://localhost:1527/sun-appserv-samples;create=true";
