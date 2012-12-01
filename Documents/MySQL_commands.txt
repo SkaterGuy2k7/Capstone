@@ -68,7 +68,7 @@ muffPipes char(1) NOT NULL,
 cataConv char(1) NOT NULL,
 tPress char(1) NOT NULL,
 notes VARCHAR(100),
-dateOI DATE NOT NULL,
+dateOI VARCHAR(10) NOT NULL,
 FOREIGN KEY (vechID) REFERENCES Vehicle(vechID)
 )
 

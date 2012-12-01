@@ -1,13 +1,10 @@
 package capstone;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the INSPECTION database table.
@@ -31,9 +28,8 @@ public class Inspection implements Serializable {
 	private String cataconv;
 
 	private String coolfluid;
-
-	@Temporal(TemporalType.DATE)
-	private Date dateoi;
+	
+	private String dateoi;
 
 	private String difffluid;
 
@@ -129,11 +125,11 @@ public class Inspection implements Serializable {
 		this.coolfluid = coolfluid;
 	}
 
-	public Date getDateoi() {
+	public String getDateoi() {
 		return this.dateoi;
 	}
 
-	public void setDateoi(Date dateoi) {
+	public void setDateoi(String dateoi) {
 		this.dateoi = dateoi;
 	}
 

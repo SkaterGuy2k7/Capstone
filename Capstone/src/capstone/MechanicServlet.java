@@ -84,6 +84,43 @@ public class MechanicServlet extends HttpServlet {
 			// setDropdowns
 			setDropdowns(request, v);
 			User u = (User) session.getAttribute("user");
+			
+			statement = conn.createStatement();
+			sql = "SELECT * FROM Inspection WHERE vechid=" + vechid;
+
+			rs = statement.executeQuery(sql);
+
+			rs.next();
+			Inspection i = new Inspection();
+
+			// set rs's to Vehicle v
+			i.setVechid(rs.getInt("vechid"));
+			i.setInspectid(rs.getInt("inspectid"));
+			i.setDateoi(rs.getString("dateoi"));
+			i.setNotes(rs.getString("notes"));
+			i.setTpress(rs.getString("tpress"));
+			i.setCataconv(rs.getString("cataconv"));
+			i.setMuffpipes(rs.getString("muffpipes"));
+			i.setExhclamhang(rs.getString("exhclamhang"));
+			i.setFuelfilter(rs.getString("fuelfilter"));
+			i.setEnginefilter(rs.getString("enginefilter"));
+			i.setCabinfilter(rs.getString("cabinfilter"));
+			i.setBrakeline(rs.getString("brakeline"));
+			i.setGaskets(rs.getString("gaskets"));
+			i.setHoses(rs.getString("hoses"));
+			i.setBelts(rs.getString("belts"));
+			i.setWashfluid(rs.getString("washfluid"));
+			i.setDifffluid(rs.getString("difffluid"));
+			i.setBrakefluid(rs.getString("brakefluid"));
+			i.setSteerfluid(rs.getString("steerfluid"));
+			i.setCoolfluid(rs.getString("coolfluid"));
+			i.setTranfluid(rs.getString("tranfluid"));
+			i.setWipeblades(rs.getString("wipeblades"));
+			i.setHorn(rs.getString("horn"));
+			i.setInlights(rs.getString("inlights"));
+			i.setExlights(rs.getString("exlights"));
+
+			session.setAttribute("inspection", i);
 			// disable Service button if Customer
 			if (u.getUsertype().equals("Cust"))
 				session.setAttribute("disabled", "disabled");
@@ -489,16 +526,51 @@ public class MechanicServlet extends HttpServlet {
 			response.sendRedirect("http://localhost:8080/Capstone/checkList.jsp");
 
 		} else if ((request.getParameter("checkSubmit") != null)) {			
-			//Do Stuff
+			try{
+				String connectionURL = "jdbc:derby://localhost:1527/sun-appserv-samples;create=true";
+				Connection conn = null;
+				ResultSet rs;
+				conn = DriverManager.getConnection(connectionURL);
+				Statement statement = conn.createStatement();						
+				Inspection inspect = setInspection(request);				
+				Vehicle v = (Vehicle) session.getAttribute("vehicle");
+				
+				String sql = "INSERT INTO Inspection(dateoi, notes, tpress, cataconv, muffpipes, exhclamhang, fuelfilter, enginefilter, cabinfilter, brakeline, gaskets, hoses, belts, washfluid, difffluid, brakefluid, steerfluid, coolfluid, tranfluid, wipeblades, horn, inlights, exlights,vechid) VALUES(" +
+						"'"+inspect.getDateoi()+"',"
+						+"'"+inspect.getNotes()+"',"
+						+ "'"+inspect.getTpress()+"',"
+						+ "'"+inspect.getCataconv()+"',"
+						+ "'"+inspect.getMuffpipes()+"',"
+						+ "'"+inspect.getExhclamhang()+"',"
+						+ "'"+inspect.getFuelfilter()+"',"
+						+ "'"+inspect.getEnginefilter()+"',"
+						+ "'"+inspect.getCabinfilter()+"',"
+						+ "'"+inspect.getBrakeline()+"',"
+						+ "'"+inspect.getGaskets()+"',"
+						+ "'"+inspect.getHoses()+"',"
+						+ "'"+inspect.getBelts()+"',"
+						+ "'"+inspect.getWashfluid()+"',"
+						+ "'"+inspect.getDifffluid()+"',"
+						+ "'"+inspect.getBrakefluid()+"',"
+						+ "'"+inspect.getSteerfluid()+"',"
+						+ "'"+inspect.getCoolfluid()+"',"
+						+ "'"+inspect.getTranfluid()+"',"
+						+ "'"+inspect.getWipeblades()+"',"
+						+ "'"+inspect.getHorn()+"',"
+						+ "'"+inspect.getInlights()+"',"
+						+ "'"+inspect.getExlights()+"',"
+						+v.getVechid()+")";					
+				statement.executeUpdate(sql);
+				session.setAttribute("inspection", inspect);
+				response.sendRedirect("http://localhost:8080/Capstone/vech_view.jsp");
+			} catch (SQLException e) {
+				out.print(e.getMessage());
+			}
 
 		} else if (request.getParameter("logout") != null) {
 			session.setAttribute("user", null);
 			response.sendRedirect("http://localhost:8080/Capstone/Login.jsp");
 		}
-
-		else if (request.getParameter("checkSubmit") != null)
-			response.sendRedirect("http://localhost:8080/Capstone/Vehicle_Invoice.jsp");
-		// Creating the user and adding them to the database
 		else if (request.getParameter("createUser") != null) {
 			Map<String, String> userErrors = new HashMap<String, String>(10);
 			try {
@@ -739,5 +811,227 @@ public class MechanicServlet extends HttpServlet {
 		// Tranny
 		session.setAttribute("selectedM", null);
 		session.setAttribute("selectedA", null);
+	}
+	
+	private Inspection setInspection(HttpServletRequest request){		
+		Inspection inspect = new Inspection();
+		if(null == request.getParameter("extLights")){
+			inspect.setExlights("Y");
+		}
+		else if(request.getParameter("extLights").equals("checked")){
+			inspect.setExlights("G");
+		}
+		else if(request.getParameter("extLights").equals("damaged")){
+			inspect.setExlights("R");
+		}
+		
+		if(null == request.getParameter("intLights")){
+			inspect.setInlights("Y");
+		}
+		else if(request.getParameter("intLights").equals("checked")){
+			inspect.setInlights("G");
+		}
+		else if(request.getParameter("intLights").equals("damaged")){
+			inspect.setInlights("R");
+		}
+		
+		if(null == request.getParameter("horn")){
+			inspect.setHorn("Y");
+		}
+		else if(request.getParameter("horn").equals("checked")){
+			inspect.setHorn("G");
+		}
+		else if(request.getParameter("horn").equals("damaged")){
+			inspect.setHorn("R");
+		}		
+		
+		if(null == request.getParameter("wipBlades")){
+			inspect.setWipeblades("Y");
+		}
+		else if(request.getParameter("wipBlades").equals("checked")){
+			inspect.setWipeblades("G");
+		}
+		else if(request.getParameter("wipBlades").equals("damaged")){
+			inspect.setWipeblades("R");
+		}
+		
+		if(null == request.getParameter("transFluid")){
+			inspect.setTranfluid("Y");
+		}
+		else if(request.getParameter("transFluid").equals("checked")){
+			inspect.setTranfluid("G");
+		}
+		else if(request.getParameter("transFluid").equals("damaged")){
+			inspect.setTranfluid("R");
+		}
+		
+		if(null == request.getParameter("coolFluid")){
+			inspect.setCoolfluid("Y");
+		}
+		else if(request.getParameter("coolFluid").equals("checked")){
+			inspect.setCoolfluid("G");
+		}
+		else if(request.getParameter("coolFluid").equals("damaged")){
+			inspect.setCoolfluid("R");
+		}
+		
+		//Check
+		if(null == request.getParameter("posFluid")){
+			inspect.setSteerfluid("Y");
+		}
+		else if(request.getParameter("posFluid").equals("checked")){
+			inspect.setSteerfluid("G");
+		}
+		else if(request.getParameter("posFluid").equals("damaged")){
+			inspect.setSteerfluid("R");
+		}
+		
+		if(null == request.getParameter("brakFluid")){
+			inspect.setBrakefluid("Y");
+		}
+		else if(request.getParameter("brakFluid").equals("checked")){
+			inspect.setBrakefluid("G");
+		}
+		else if(request.getParameter("brakFluid").equals("damaged")){
+			inspect.setBrakefluid("R");
+		}
+		
+		if(null == request.getParameter("diffFluid")){
+			inspect.setDifffluid("Y");
+		}
+		else if(request.getParameter("diffFluid").equals("checked")){
+			inspect.setDifffluid("G");
+		}
+		else if(request.getParameter("diffFluid").equals("damaged")){
+			inspect.setDifffluid("R");
+		}
+		
+		if(null == request.getParameter("washFluid")){
+			inspect.setWashfluid("Y");
+		}
+		else if(request.getParameter("washFluid").equals("checked")){
+			inspect.setWashfluid("G");
+		}
+		else if(request.getParameter("washFluid").equals("damaged")){
+			inspect.setWashfluid("R");
+		}
+		
+		if(null == request.getParameter("belts")){
+			inspect.setBelts("Y");
+		}
+		else if(request.getParameter("belts").equals("checked")){
+			inspect.setBelts("G");
+		}
+		else if(request.getParameter("belts").equals("damaged")){
+			inspect.setBelts("R");
+		}
+		
+		if(null == request.getParameter("hoses")){
+			inspect.setHoses("Y");
+		}
+		else if(request.getParameter("hoses").equals("checked")){
+			inspect.setHoses("G");
+		}
+		else if(request.getParameter("hoses").equals("damaged")){
+			inspect.setHoses("R");
+		}
+		
+		if(null == request.getParameter("gasket")){
+			inspect.setGaskets("Y");
+		}
+		else if(request.getParameter("gasket").equals("checked")){
+			inspect.setGaskets("G");
+		}
+		else if(request.getParameter("gasket").equals("damaged")){
+			inspect.setGaskets("R");
+		}
+		
+		if(null == request.getParameter("brakLines")){
+			inspect.setBrakeline("Y");
+		}
+		else if(request.getParameter("brakLines").equals("checked")){
+			inspect.setBrakeline("G");
+		}
+		else if(request.getParameter("brakLines").equals("damaged")){
+			inspect.setBrakeline("R");
+		}
+		
+		if(null == request.getParameter("cabFilter")){
+			inspect.setCabinfilter("Y");
+		}
+		else if(request.getParameter("cabFilter").equals("checked")){
+			inspect.setCabinfilter("G");
+		}
+		else if(request.getParameter("cabFilter").equals("damaged")){
+			inspect.setCabinfilter("R");
+		}
+		
+		if(null == request.getParameter("engAirFilter")){
+			inspect.setEnginefilter("Y");
+		}
+		else if(request.getParameter("engAirFilter").equals("checked")){
+			inspect.setEnginefilter("G");
+		}
+		else if(request.getParameter("engAirFilter").equals("damaged")){
+			inspect.setEnginefilter("R");
+		}
+		
+		if(null == request.getParameter("fuelFilter")){
+			inspect.setFuelfilter("Y");
+		}
+		else if(request.getParameter("fuelFilter").equals("checked")){
+			inspect.setFuelfilter("G");
+		}
+		else if(request.getParameter("fuelFilter").equals("damaged")){
+			inspect.setFuelfilter("R");
+		}
+		
+		if(null == request.getParameter("exhClamps")){
+			inspect.setExhclamhang("Y");
+		}
+		else if(request.getParameter("exhClamps").equals("checked")){
+			inspect.setExhclamhang("G");
+		}
+		else if(request.getParameter("exhClamps").equals("damaged")){
+			inspect.setExhclamhang("R");
+		}
+		
+		if(null == request.getParameter("muffPipes")){
+			inspect.setMuffpipes("Y");
+		}
+		else if(request.getParameter("muffPipes").equals("checked")){
+			inspect.setMuffpipes("G");
+		}
+		else if(request.getParameter("muffPipes").equals("damaged")){
+			inspect.setMuffpipes("R");
+		}
+		
+		if(null == request.getParameter("setCataconv")){
+			inspect.setCataconv("Y");
+		}
+		else if(request.getParameter("catConv").equals("checked")){
+			inspect.setCataconv("G");
+		}
+		else if(request.getParameter("catConv").equals("damaged")){
+			inspect.setCataconv("R");
+		}
+		
+		if(null == request.getParameter("tirePress")){
+			inspect.setTpress("Y");
+		}
+		else if(request.getParameter("tirePress").equals("checked")){
+			inspect.setTpress("G");
+		}
+		else if(request.getParameter("tirePress").equals("damaged")){
+			inspect.setTpress("R");
+		}
+		
+		inspect.setNotes(request.getParameter("miscNotes"));
+		SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+		Date doc = new Date();
+		
+		inspect.setDateoi(df.format(doc));
+		
+		return inspect;
 	}
 }

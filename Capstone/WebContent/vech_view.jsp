@@ -110,13 +110,15 @@
 						<th>Date</th>
 						<th>Checklist</th>
 					</tr>
-					<tr>
-
-					</tr>
 				</table>
 			</div>
+			<table>
+				<tr>
+					<th>${inspection.getDateoi()}</th>
+					<th><a href="checkList.jsp">CheckList</a></th>
+				</tr>
+			</table>
 		</div>
-
 	</div>
 	<form name="btnForm" action="MechanicServlet" method="post">
 		<center>
