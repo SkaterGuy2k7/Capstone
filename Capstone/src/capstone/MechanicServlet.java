@@ -135,6 +135,11 @@ public class MechanicServlet extends HttpServlet {
 				session.setAttribute("disabled", "disabled");
 			else
 				session.setAttribute("disabled", null);
+			// disable invocies button for Personal Mechanic
+			if (u.getUsertype().equals("PersonalMech"))
+				session.setAttribute("disableInv", "disabled");
+			else
+				session.setAttribute("disableInv", null);
 			// NEED TO DO INSPECTIONS
 
 			response.sendRedirect("http://localhost:8080/Capstone/vech_view.jsp");
@@ -637,12 +642,14 @@ public class MechanicServlet extends HttpServlet {
 				rs = statement.executeQuery(sql);
 				// Validation for creating user
 				while (rs.next()) {
+					// User type Validation
 					if (request.getParameter("userTypeDD").equals("Choose")) {
 						userErrors.put("typeError",
 								"Please choose the customer type");
 					} else {
 						u.setUsertype(request.getParameter("userTypeDD"));
 					}
+					// Username Validation
 					if (request.getParameter("userName").equals("")
 							&& rs.getString("userName").equals(
 									request.getParameter("userName"))) {
@@ -651,6 +658,7 @@ public class MechanicServlet extends HttpServlet {
 					} else {
 						u.setUsername(request.getParameter("userName"));
 					}
+					// Password Validation
 					if (request.getParameter("password").equals("")
 							&& !request.getParameter("password").equals(
 									request.getParameter("retypePass"))) {
@@ -660,6 +668,7 @@ public class MechanicServlet extends HttpServlet {
 					} else {
 						u.setPassword(request.getParameter("password"));
 					}
+					// Email Validation
 					if (request.getParameter("emailAddy").equals("")) {
 						userErrors.put("emailError",
 								"Please enter a email address");
@@ -671,35 +680,41 @@ public class MechanicServlet extends HttpServlet {
 					} else {
 						u.setEmail(request.getParameter("emailAddy"));
 					}
+					// First Name Validation
 					if (request.getParameter("firstName").equals("")) {
 						userErrors.put("firstError",
 								"Please enter your first name");
 					} else {
 						u.setFirstname(request.getParameter("firstName"));
 					}
+					// Last name Validation
 					if (request.getParameter("lastName").equals("")) {
 						userErrors.put("lastError",
 								"Please enter your last name");
 					} else {
 						u.setLastname(request.getParameter("lastName"));
 					}
+					// Address Validation
 					if (request.getParameter("address").equals("")) {
 						userErrors
 								.put("addyError", "Please enter your address");
 					} else {
 						u.setAddress(request.getParameter("address"));
 					}
+					// City Validation
 					if (request.getParameter("city").equals("")) {
 						userErrors.put("cityError", "Please enter your city");
 					} else {
 						u.setCity(request.getParameter("city"));
 					}
+					// Province Validation
 					if (request.getParameter("province").equals("")) {
 						userErrors.put("provError",
 								"Please enter your province");
 					} else {
 						u.setProvince(request.getParameter("province"));
 					}
+					// Postal Code Validation
 					if (request.getParameter("postalCode").equals("")
 							&& request.getParameter("postalCode").length() != 6) {
 						userErrors.put("postalError",
@@ -707,6 +722,7 @@ public class MechanicServlet extends HttpServlet {
 					} else {
 						u.setPostal(request.getParameter("postalCode"));
 					}
+					// Phone Validation
 					if (request.getParameter("phone").equals("")
 							&& request.getParameter("phone").length() != 10
 							&& Pattern.matches("[0-9]+",
@@ -716,6 +732,7 @@ public class MechanicServlet extends HttpServlet {
 					} else {
 						u.setPhone(request.getParameter("phone"));
 					}
+					// Fax Validation
 					if (request.getParameter("fax").length() != 10
 							&& Pattern.matches("[0-9]+",
 									request.getParameter("fax")) == false) {
@@ -724,6 +741,9 @@ public class MechanicServlet extends HttpServlet {
 					} else {
 						u.setFax(request.getParameter("fax"));
 					}
+
+					// VALIDATION ENDS
+
 					if (!userErrors.isEmpty()) {
 						request.setAttribute("errors", userErrors);
 						response.sendRedirect("register.jsp");

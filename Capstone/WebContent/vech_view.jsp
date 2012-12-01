@@ -131,8 +131,9 @@
 			<div>
 				<input type="submit" name="editVehicle" value="Edit Vehicle" /> <input
 					type="button" onclick="show_confirm()" name="delVehicle"
-					value="Delete Vehicle" /> <input type="submit" name="servVehicle"
-					value="Service Vehicle" ${disabled} />
+					value="Delete Vehicle" /> 
+					<input type="submit" name="servVehicle" value="Service Vehicle" ${disabled} />
+					<input type="submit" name="invoices" value="Invoices" ${disableInv} />
 			</div>
 		</center>
 	</form>
