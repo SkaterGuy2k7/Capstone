@@ -623,7 +623,7 @@ public class MechanicServlet extends HttpServlet {
 				conn = DriverManager.getConnection(connectionURL);
 				Statement statement = conn.createStatement();
 				User u = new User();
-				String sql = "SELECT * FROM User";
+				String sql = "SELECT * FROM Users";
 
 				rs = statement.executeQuery(sql);
 				// Validation for creating user
