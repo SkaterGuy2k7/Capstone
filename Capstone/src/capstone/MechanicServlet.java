@@ -744,36 +744,34 @@ public class MechanicServlet extends HttpServlet {
 
 					// VALIDATION ENDS
 
-					if (!userErrors.isEmpty()) {
-						request.setAttribute("errors", userErrors);
-						response.sendRedirect("register.jsp");
-					} else {
-						sql = "INSERT INTO Users(firstName, lastName, address, city, province, postal, phone, fax, email, userName, password, userType) VALUES('"
-								+ u.getFirstname()
-								+ "','"
-								+ u.getLastname()
-								+ "','"
-								+ u.getAddress()
-								+ "','"
-								+ u.getCity()
-								+ "','"
-								+ u.getProvince()
-								+ "','"
-								+ u.getPostal()
-								+ "','"
-								+ u.getPhone()
-								+ "','"
-								+ u.getFax()
-								+ "','"
-								+ u.getEmail()
-								+ "','"
-								+ u.getUsername()
-								+ "','"
-								+ u.getPassword()
-								+ "','" + u.getUsertype() + "')";
-						statement.executeUpdate(sql);
-					}
-
+				}
+				if (!userErrors.isEmpty()) {
+					request.setAttribute("errors", userErrors);
+					response.sendRedirect("register.jsp");
+				} else {
+					sql = "INSERT INTO Users(firstName, lastName, address, city, province, postal, phone, fax, email, userName, password, userType) VALUES('"
+							+ u.getFirstname()
+							+ "','"
+							+ u.getLastname()
+							+ "','"
+							+ u.getAddress()
+							+ "','"
+							+ u.getCity()
+							+ "','"
+							+ u.getProvince()
+							+ "','"
+							+ u.getPostal()
+							+ "','"
+							+ u.getPhone()
+							+ "','"
+							+ u.getFax()
+							+ "','"
+							+ u.getEmail()
+							+ "','"
+							+ u.getUsername()
+							+ "','"
+							+ u.getPassword() + "','" + u.getUsertype() + "')";
+					statement.executeUpdate(sql);
 				}
 				statement.close();
 				conn.close();
