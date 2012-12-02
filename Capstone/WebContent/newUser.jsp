@@ -39,17 +39,13 @@
 	<%
 		if (session != null) {
 			if (session.getAttribute("buttonPressed").equals("createUser")) {
-				ArrayList<User> userList = (ArrayList<User>) session
-						.getAttribute("statename");
+				User userList = (User) session.getAttribute("newUser");
 				if (userList != null) {
-					for (User users : userList) {
-						out.println("User Type: " + users.getUsertype()
-								+ " First Name: " + "<b>"
-								+ users.getFirstname() + "</b>"
-								+ " Last Name: " + users.getLastname()
-								+ " User Name: " + users.getUsername());
-						out.println("<br />");
-					}
+					out.println(" First Name: " + "<b>"
+							+ userList.getFirstname() + "</b>"
+							+ " Last Name: " + userList.getLastname()
+							+ " User Name: " + userList.getUsername() + "User Type: " + userList.getUsertype());
+					out.println("<br />");
 				}
 			}
 		}

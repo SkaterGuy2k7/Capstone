@@ -776,6 +776,7 @@ public class MechanicServlet extends HttpServlet {
 							+ u.getPassword() + "','" + u.getUsertype() + "')";
 					statement.executeUpdate(sql);
 				}
+				session.setAttribute("newUser", u);
 				statement.close();
 				conn.close();
 			} catch (SQLException e) {
