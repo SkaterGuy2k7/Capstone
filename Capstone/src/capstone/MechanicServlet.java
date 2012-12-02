@@ -782,14 +782,7 @@ public class MechanicServlet extends HttpServlet {
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());
 			}
-
-			/*
-			 * String firstname, String lastname, String address, String city,
-			 * String province, String postal, String phone, String fax, String
-			 * email, String username, String password, String usertype
-			 */
 			session.setAttribute("buttonPressed", "createUser");
-
 			response.sendRedirect("newUser.jsp");
 
 		} else {
