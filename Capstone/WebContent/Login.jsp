@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <link rel="stylesheet" type="text/css" href="style.css" />
-<title>Home/Login Page</title>
+<title>Grease Monkey Login Page</title>
 
 </head>
 
@@ -37,7 +37,7 @@
 		<a href="register.jsp">Register New User</a>
 	</div>
 	<center>
-		<h2>Welcome to ASAS Industries Maintenance Tracker</h2>
+		<h2>Welcome to Grease Monkey</h2>
 
 
 
@@ -46,7 +46,7 @@
 			<h3>Who We Are!</h3>
 			<h4>ASAS Industries</h4>
 			<h3>What We Do!</h3>
-			<h4>ASAS Personal or Commercial Automobile Maintenance Tracker</h4>
+			<h4>ASAS Grease Monkey</h4>
 		</div>
 	</center>
 </body>
