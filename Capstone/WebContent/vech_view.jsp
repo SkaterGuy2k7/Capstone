@@ -104,7 +104,7 @@
 			</h4>
 		</div>
 		<div align="center">
-			<div id="vechserv" align="center">
+			<div id="vechserv" align="center">				
 				<table>
 					<tr>
 						<th>Date</th>
@@ -118,11 +118,13 @@
 						{
 							for(Inspection i : inspects)
 							{
-								//out.println("<tr><td>"+i.getDateoi()+"</td><td>"+i.get);
+								out.println("<tr><td>"+i.getDateoi()+"</td><td><a href=\"http://localhost:8080/Capstone/MechanicServlet?inspectid="
+										+ i.getInspectid()
+										+ "\">CheckList</a></td></tr>");
 							}
 						}
 					%>
-				</table>
+				</table>				
 			</div>
 		</div>
 	</div>

@@ -69,6 +69,42 @@ public class Inspection implements Serializable {
 	public Inspection() {
 	}
 
+	public Inspection(int inspectid, String belts, String brakefluid,
+			String brakeline, String cabinfilter, String cataconv,
+			String coolfluid, String dateoi, String difffluid,
+			String enginefilter, String exhclamhang, String exlights,
+			String fuelfilter, String gaskets, String horn, String hoses,
+			String inlights, String muffpipes, String notes, String steerfluid,
+			String tpress, String tranfluid, String washfluid,
+			String wipeblades, int vechid) {
+		super();
+		this.inspectid = inspectid;
+		this.belts = belts;
+		this.brakefluid = brakefluid;
+		this.brakeline = brakeline;
+		this.cabinfilter = cabinfilter;
+		this.cataconv = cataconv;
+		this.coolfluid = coolfluid;
+		this.dateoi = dateoi;
+		this.difffluid = difffluid;
+		this.enginefilter = enginefilter;
+		this.exhclamhang = exhclamhang;
+		this.exlights = exlights;
+		this.fuelfilter = fuelfilter;
+		this.gaskets = gaskets;
+		this.horn = horn;
+		this.hoses = hoses;
+		this.inlights = inlights;
+		this.muffpipes = muffpipes;
+		this.notes = notes;
+		this.steerfluid = steerfluid;
+		this.tpress = tpress;
+		this.tranfluid = tranfluid;
+		this.washfluid = washfluid;
+		this.wipeblades = wipeblades;
+		this.vechid = vechid;
+	}
+
 	public int getInspectid() {
 		return this.inspectid;
 	}

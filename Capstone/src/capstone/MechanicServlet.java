@@ -48,6 +48,7 @@ public class MechanicServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		String vechid = request.getParameter("vechid");
+		String inspectId = request.getParameter("inspectid");		
 		PrintWriter out = response.getWriter();
 		try {
 
@@ -56,6 +57,7 @@ public class MechanicServlet extends HttpServlet {
 			ResultSet rs;
 			conn = DriverManager.getConnection(connectionURL);
 			Statement statement = conn.createStatement();
+			if(vechid != null){
 			String sql = "SELECT * FROM Vehicle WHERE vechid=" + vechid;
 
 			rs = statement.executeQuery(sql);
@@ -140,9 +142,167 @@ public class MechanicServlet extends HttpServlet {
 				session.setAttribute("disableInv", "disabled");
 			else
 				session.setAttribute("disableInv", null);
-			// NEED TO DO INSPECTIONS
 
 			response.sendRedirect("http://localhost:8080/Capstone/vech_view.jsp");
+			}
+			else if (inspectId != null) {	
+				int inspectid = Integer.parseInt(request.getParameter("inspectid")) - 1;
+				Map<String, String> vechStatus = new HashMap<String, String>(22);
+				ArrayList<Inspection> inspect = (ArrayList<Inspection>) session.getAttribute("inspects");			
+				
+				//Ex Lights
+				if(inspect.get(inspectid).getExlights().equals("G"))
+					vechStatus.put("exLights", "green");
+				else if(inspect.get(inspectid).getExlights().equals("R"))
+					vechStatus.put("exLights", "red");
+				else if(inspect.get(inspectid).getExlights().equals("Y"))
+					vechStatus.put("exLights", "yellow");
+				//In Lights
+				if(inspect.get(inspectid).getInlights().equals("G"))
+					vechStatus.put("inLights", "green");
+				else if(inspect.get(inspectid).getInlights().equals("R"))
+					vechStatus.put("inLights", "red");
+				else if(inspect.get(inspectid).getInlights().equals("Y"))
+					vechStatus.put("inLights", "yellow");
+				//Horn
+				if(inspect.get(inspectid).getHorn().equals("G"))
+					vechStatus.put("horn", "green");
+				else if(inspect.get(inspectid).getHorn().equals("R"))
+					vechStatus.put("horn", "red");
+				else if(inspect.get(inspectid).getHorn().equals("Y"))
+					vechStatus.put("horn", "yellow");
+				//Wiper blades
+				if(inspect.get(inspectid).getWipeblades().equals("G"))
+					vechStatus.put("wipeblades", "green");
+				else if(inspect.get(inspectid).getWipeblades().equals("R"))
+					vechStatus.put("wipeblades", "red");
+				else if(inspect.get(inspectid).getWipeblades().equals("Y"))
+					vechStatus.put("wipeblades", "yellow");
+				//Transmission 
+				if(inspect.get(inspectid).getTranfluid().equals("G"))
+					vechStatus.put("tranfluid", "green");
+				else if(inspect.get(inspectid).getTranfluid().equals("R"))
+					vechStatus.put("tranfluid", "red");
+				else if(inspect.get(inspectid).getTranfluid().equals("Y"))
+					vechStatus.put("tranfluid", "yellow");
+				//Coolant
+				if(inspect.get(inspectid).getCoolfluid().equals("G"))
+					vechStatus.put("coolFluid", "green");
+				else if(inspect.get(inspectid).getCoolfluid().equals("R"))
+					vechStatus.put("coolFluid", "red");
+				else if(inspect.get(inspectid).getCoolfluid().equals("Y"))
+					vechStatus.put("coolFluid", "yellow");
+				//Power Steering 
+				if(inspect.get(inspectid).getSteerfluid().equals("G"))
+					vechStatus.put("steerFluid", "green");
+				else if(inspect.get(inspectid).getSteerfluid().equals("R"))
+					vechStatus.put("steerFluid", "red");
+				else if(inspect.get(inspectid).getSteerfluid().equals("Y"))
+					vechStatus.put("steerFluid", "yellow");
+				//Brake Fluid
+				if(inspect.get(inspectid).getBrakefluid().equals("G"))
+					vechStatus.put("brakeFluid", "green");
+				else if(inspect.get(inspectid).getBrakefluid().equals("R"))
+					vechStatus.put("brakeFluid", "red");
+				else if(inspect.get(inspectid).getBrakefluid().equals("Y"))
+					vechStatus.put("brakeFluid", "yellow");
+				//Differential 
+				if(inspect.get(inspectid).getDifffluid().equals("G"))
+					vechStatus.put("diffFluid", "green");
+				else if(inspect.get(inspectid).getDifffluid().equals("R"))
+					vechStatus.put("diffFluid", "red");
+				else if(inspect.get(inspectid).getDifffluid().equals("Y"))
+					vechStatus.put("diffFluid", "yellow");
+				//Washer Fluid
+				if(inspect.get(inspectid).getWashfluid().equals("G"))
+					vechStatus.put("washFluid", "green");
+				else if(inspect.get(inspectid).getWashfluid().equals("R"))
+					vechStatus.put("washFluid", "red");
+				else if(inspect.get(inspectid).getWashfluid().equals("Y"))
+					vechStatus.put("washFluid", "yellow");
+				//Belts 
+				if(inspect.get(inspectid).getBelts().equals("G"))
+					vechStatus.put("belts", "green");
+				else if(inspect.get(inspectid).getBelts().equals("R"))
+					vechStatus.put("belts", "red");
+				else if(inspect.get(inspectid).getBelts().equals("Y"))
+					vechStatus.put("belts", "yellow");
+				//Hoses
+				if(inspect.get(inspectid).getHoses().equals("G"))
+					vechStatus.put("hoses", "green");
+				else if(inspect.get(inspectid).getHoses().equals("R"))
+					vechStatus.put("hoses", "red");
+				else if(inspect.get(inspectid).getHoses().equals("Y"))
+					vechStatus.put("hoses", "yellow");
+				//Gaskets 
+				if(inspect.get(inspectid).getGaskets().equals("G"))
+					vechStatus.put("gaskets", "green");
+				else if(inspect.get(inspectid).getGaskets().equals("R"))
+					vechStatus.put("gaskets", "red");
+				else if(inspect.get(inspectid).getGaskets().equals("Y"))
+					vechStatus.put("gaskets", "yellow");
+				//Brake Line
+				if(inspect.get(inspectid).getBrakeline().equals("G"))
+					vechStatus.put("brakeLine", "green");
+				else if(inspect.get(inspectid).getBrakeline().equals("R"))
+					vechStatus.put("brakeLine", "red");
+				else if(inspect.get(inspectid).getBrakeline().equals("Y"))
+					vechStatus.put("brakeLine", "yellow");
+				//Cabin Filter 
+				if(inspect.get(inspectid).getCabinfilter().equals("G"))
+					vechStatus.put("cabinFilter", "green");
+				else if(inspect.get(inspectid).getCabinfilter().equals("R"))
+					vechStatus.put("cabinFilter", "red");
+				else if(inspect.get(inspectid).getCabinfilter().equals("Y"))
+					vechStatus.put("cabinFilter", "yellow");
+				//Engine filter
+				if(inspect.get(inspectid).getEnginefilter().equals("G"))
+					vechStatus.put("enginefilter", "green");
+				else if(inspect.get(inspectid).getEnginefilter().equals("R"))
+					vechStatus.put("enginefilter", "red");
+				else if(inspect.get(inspectid).getEnginefilter().equals("Y"))
+					vechStatus.put("enginefilter", "yellow");
+				// Fuel Filter
+				if(inspect.get(inspectid).getFuelfilter().equals("G"))
+					vechStatus.put("fuelfilter", "green");
+				else if(inspect.get(inspectid).getFuelfilter().equals("R"))
+					vechStatus.put("fuelfilter", "red");
+				else if(inspect.get(inspectid).getFuelfilter().equals("Y"))
+					vechStatus.put("fuelfilter", "yellow");
+				//Exhclamhang
+				if(inspect.get(inspectid).getExhclamhang().equals("G"))
+					vechStatus.put("exhClamHang", "green");
+				else if(inspect.get(inspectid).getExhclamhang().equals("R"))
+					vechStatus.put("exhClamHang", "red");
+				else if(inspect.get(inspectid).getExhclamhang().equals("Y"))
+					vechStatus.put("exhClamHang", "yellow");
+				//Muff Pipes
+				if(inspect.get(inspectid).getMuffpipes().equals("G"))
+					vechStatus.put("muffPipes", "green");
+				else if(inspect.get(inspectid).getMuffpipes().equals("R"))
+					vechStatus.put("muffPipes", "red");
+				else if(inspect.get(inspectid).getMuffpipes().equals("Y"))
+					vechStatus.put("muffPipes", "yellow");
+				//Catalytic Converter
+				if(inspect.get(inspectid).getCataconv().equals("G"))
+					vechStatus.put("cataConv", "green");
+				else if(inspect.get(inspectid).getCataconv().equals("R"))
+					vechStatus.put("cataConv", "red");
+				else if(inspect.get(inspectid).getCataconv().equals("Y"))
+					vechStatus.put("cataConv", "yellow");
+				//Tire Press
+				if(inspect.get(inspectid).getTpress().equals("G"))
+					vechStatus.put("tPress", "green");
+				else if(inspect.get(inspectid).getTpress().equals("R"))
+					vechStatus.put("tPress", "red");
+				else if(inspect.get(inspectid).getTpress().equals("Y"))
+					vechStatus.put("tPress", "yellow");
+				//Notes			
+				vechStatus.put("notes", inspect.get(inspectid).getNotes());
+								
+				session.setAttribute("status", vechStatus);
+				response.sendRedirect("http://localhost:8080/Capstone/view_checklist.jsp");
+			} 
 
 		} catch (SQLException e) {
 			out.println(e.getMessage());
@@ -621,14 +781,14 @@ public class MechanicServlet extends HttpServlet {
 						+ "',"
 						+ "'"
 						+ inspect.getExlights() + "'," + v.getVechid() + ")";
-				statement.executeUpdate(sql);
+				statement.executeUpdate(sql);				
 				session.setAttribute("inspection", inspect);
 				response.sendRedirect("http://localhost:8080/Capstone/vech_view.jsp");
 			} catch (SQLException e) {
 				out.print(e.getMessage());
-			}
+			}			
 
-		} else if (request.getParameter("logout") != null) {
+		}else if (request.getParameter("logout") != null) {
 			session.setAttribute("user", null);
 			response.sendRedirect("http://localhost:8080/Capstone/Login.jsp");
 		} else if (request.getParameter("createUser") != null) {
