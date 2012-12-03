@@ -18,18 +18,19 @@
 				style="width: 100px; height: 20px" />
 		</div>
 		<br />
-		<div style="float: right; clear: both">
+		<div style="float: right; clear: both; padding-top:5px">
 			Password:<input type="password" name="password"
 				style="width: 100px; height: 20px" />
 		</div>
-		<div style="float: right; clear: both"><span class="error">${error}</span>
-			<input type="submit" name="submit" value="Login" />
+		<div style="float: right; clear: both; padding-top:5px">
+			<span class="error">${error}</span> <input type="submit"
+				name="submit" value="Login" />
 		</div>
 	</form>
 
 	<img src="ASASLogo.png" />
 	<div>
-		<br />
+		<br /> <br />
 		<hr />
 	</div>
 	<div style="float: right">

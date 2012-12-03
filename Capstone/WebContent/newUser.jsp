@@ -2,9 +2,11 @@
 <%@ page import="capstone.*" language="java"
 	import="java.util.*, capstone.*"
 	contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+	
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<link rel="stylesheet" type="text/css" href="style.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>New User Created</title>
 </head>
@@ -18,11 +20,11 @@
 				style="width: 100px; height: 20px" />
 		</div>
 		<br />
-		<div style="float: right; clear: both">
+		<div style="float: right; clear: both; padding-top: 5px">
 			Password:<input type="password" name="password"
 				style="width: 100px; height: 20px" />
 		</div>
-		<div style="float: right; clear: both">
+		<div style="float: right; clear: both; padding-top: 5px">
 			<span class="error">${error}</span> <input type="submit"
 				name="submit" value="Login" />
 		</div>
@@ -30,7 +32,7 @@
 
 	<img src="ASASLogo.png" />
 	<div>
-		<br />
+		<br /> <br />
 		<hr />
 	</div>
 	<div>
@@ -44,7 +46,8 @@
 					out.println(" First Name: " + "<b>"
 							+ userList.getFirstname() + "</b>"
 							+ " Last Name: " + userList.getLastname()
-							+ " User Name: " + userList.getUsername() + "User Type: " + userList.getUsertype());
+							+ " User Name: " + userList.getUsername()
+							+ " User Type: " + userList.getUsertype());
 					out.println("<br />");
 				}
 			}
