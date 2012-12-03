@@ -18,17 +18,19 @@
 				style="width: 100px; height: 20px" />
 		</div>
 		<br />
-		<div style="float: right; clear: both; padding-top:5px">
+		<div style="float: right; clear: both; padding-top: 5px">
 			Password:<input type="password" name="password"
 				style="width: 100px; height: 20px" />
 		</div>
-		<div style="float: right; clear: both; padding-top:5px">
+		<div style="float: right; clear: both; padding-top: 5px">
 			<span class="error">${error}</span> <input type="submit"
 				name="submit" value="Login" />
 		</div>
 	</form>
 
-	<img src="ASASLogo.png" />
+	
+	<img src="greaseMonkey.gif" />
+	
 	<div>
 		<br /> <br />
 		<hr />
@@ -36,18 +38,18 @@
 	<div style="float: right">
 		<a href="register.jsp">Register New User</a>
 	</div>
-	<center>
+	<br />
+	<div align="center">
 		<h2>Welcome to Grease Monkey</h2>
 
 
-
-		<div>
-			<h2>Our Mission:</h2>
-			<h3>Who We Are!</h3>
-			<h4>ASAS Industries</h4>
-			<h3>What We Do!</h3>
-			<h4>ASAS Grease Monkey</h4>
-		</div>
-	</center>
+		<h2>Our Mission:</h2> To have a simple way to know what's going on with your vehicle.
+		<h3>Who We Are!</h3>
+		<h4>ASAS Industries</h4>
+		<h3>What We Do!</h3>
+		<h4>ASAS Grease Monkey</h4>
+	</div>
+	
+	<img src="ASASLogo.png" />
 </body>
 </html>
