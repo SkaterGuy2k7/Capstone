@@ -195,7 +195,7 @@
 						rows="3"></textarea></td>
 			</tr>
 		</table>
-		<br /> <input type="submit" name="checkSubmit" value="Create Invoice" /><input type="reset"
+		<br /> <input type="submit" name="checkSubmit" value="Create Checklist" /><input type="reset"
 			value="Reset" name="checkReset" style="width: 100px; height: 25px" />
 	</form>
 	
