@@ -127,7 +127,7 @@
 			</tr>
 			<tr>
 				<td colspan="3">Notes: <textarea name="miscNotes" cols="75%"
-						rows="3"></textarea>${status.notes }</td>
+						rows="3">${status.notes }</textarea></td>
 			</tr>
 		</table>
 		<br /> 	
