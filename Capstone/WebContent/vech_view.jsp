@@ -20,7 +20,7 @@
 </head>
 <body>
 	<div id="logo">
-		<img src="ASASLogo.png" />
+		<img src="greaseMonkey.gif" />
 	</div>
 	<div style="float: right">
 		<form action="MechanicServlet" method="post">

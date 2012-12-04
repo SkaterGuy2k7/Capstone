@@ -10,7 +10,7 @@
 </head>
 <body>
 	<div id="logo">
-		<img src="ASASLogo.png" />
+		<img src="greaseMonkey.gif" />
 	</div>
 
 <span class="error">${errors.nullError}</span>

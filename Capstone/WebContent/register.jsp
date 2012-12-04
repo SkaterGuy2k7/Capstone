@@ -8,7 +8,7 @@
 </head>
 <body>
 <div style="float: right">
-<img src="ASASLogo.png"/>
+<img src="greaseMonkey.gif"/>
 </div>
 <div style="float: left">
 	<h2>Register New User/Mechanic</h2>

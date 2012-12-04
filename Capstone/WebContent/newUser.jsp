@@ -30,7 +30,7 @@
 		</div>
 	</form>
 
-	<img src="ASASLogo.png" />
+	<img src="greaseMonkey.gif" />
 	<div>
 		<br /> <br />
 		<hr />
