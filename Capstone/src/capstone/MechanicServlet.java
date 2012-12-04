@@ -858,99 +858,100 @@ public class MechanicServlet extends HttpServlet {
 					// User type Validation
 					if (request.getParameter("userTypeDD").equals("Choose")) {
 						userErrors.put("typeError",
-								"Please choose the customer type");
+								"Please choose the customer type<br/>");
 					} else {
 						u.setUsertype(request.getParameter("userTypeDD"));
 					}
 					// Username Validation
 					if (request.getParameter("userName").equals("")
-							&& rs.getString("userName").equals(
+							|| rs.getString("userName").equals(
 									request.getParameter("userName"))) {
 						userErrors.put("userError",
-								"Please enter a valid User Name");
+								"Please enter a valid User Name<br/>");
 					} else {
 						u.setUsername(request.getParameter("userName"));
 					}
 					// Password Validation
 					if (request.getParameter("password").equals("")
-							&& !request.getParameter("password").equals(
+							|| !request.getParameter("password").equals(
 									request.getParameter("retypePass"))) {
 						userErrors.put("passError", "Please enter a password");
 						userErrors.put("rePass",
-								"Please enter a matching password!");
+								"Please enter a matching password!<br/>");
 					} else {
 						u.setPassword(request.getParameter("password"));
 					}
 					// Email Validation
 					if (request.getParameter("emailAddy").equals("")) {
 						userErrors.put("emailError",
-								"Please enter a email address");
+								"Please enter a email address<br/>");
 					} else if (rs.getString("email").equals(
 							request.getParameter("emailAddy"))) {
 						userErrors
 								.put("errorsSQLEmail",
-										"Email already exsists, Please login or use other email address!");
+										"Email already exsists, Please login or use other email address!<br/>");
 					} else {
 						u.setEmail(request.getParameter("emailAddy"));
 					}
 					// First Name Validation
 					if (request.getParameter("firstName").equals("")) {
 						userErrors.put("firstError",
-								"Please enter your first name");
+								"Please enter your first name<br/>");
 					} else {
 						u.setFirstname(request.getParameter("firstName"));
 					}
 					// Last name Validation
 					if (request.getParameter("lastName").equals("")) {
 						userErrors.put("lastError",
-								"Please enter your last name");
+								"Please enter your last name<br/>");
 					} else {
 						u.setLastname(request.getParameter("lastName"));
 					}
 					// Address Validation
 					if (request.getParameter("address").equals("")) {
-						userErrors
-								.put("addyError", "Please enter your address");
+						userErrors.put("addyError",
+								"Please enter your address<br/>");
 					} else {
 						u.setAddress(request.getParameter("address"));
 					}
 					// City Validation
 					if (request.getParameter("city").equals("")) {
-						userErrors.put("cityError", "Please enter your city");
+						userErrors.put("cityError",
+								"Please enter your city<br/>");
 					} else {
 						u.setCity(request.getParameter("city"));
 					}
 					// Province Validation
 					if (request.getParameter("province").equals("")) {
 						userErrors.put("provError",
-								"Please enter your province");
+								"Please enter your province<br/>");
 					} else {
 						u.setProvince(request.getParameter("province"));
 					}
 					// Postal Code Validation
 					if (request.getParameter("postalCode").equals("")
-							&& request.getParameter("postalCode").length() != 6) {
+							|| request.getParameter("postalCode").length() != 6) {
 						userErrors.put("postalError",
-								"Please enter a valid postal code");
+								"Please enter a valid postal code<br/>");
 					} else {
 						u.setPostal(request.getParameter("postalCode"));
 					}
 					// Phone Validation
 					if (request.getParameter("phone").equals("")
-							&& request.getParameter("phone").length() != 10
-							&& Pattern.matches("[0-9]+",
+							|| request.getParameter("phone").length() != 10
+							|| Pattern.matches("[0-9]+",
 									request.getParameter("phone")) == false) {
 						userErrors.put("phoneError",
-								"Please enter a valid phone Number");
+								"Please enter a valid phone Number<br/>");
 					} else {
 						u.setPhone(request.getParameter("phone"));
 					}
 					// Fax Validation
 					if (request.getParameter("fax").length() != 10
-							&& Pattern.matches("[0-9]+",
+							|| Pattern.matches("[0-9]+",
 									request.getParameter("fax")) == false) {
 						userErrors.put("faxError",
-								"please enter a valid fax number");
+								"Please enter a valid fax number<br/>");
 					} else {
 						u.setFax(request.getParameter("fax"));
 					}
@@ -959,7 +960,7 @@ public class MechanicServlet extends HttpServlet {
 
 				}
 				if (!userErrors.isEmpty()) {
-					request.setAttribute("errors", userErrors);
+					session.setAttribute("errors", userErrors);
 					response.sendRedirect("register.jsp");
 				} else {
 					sql = "INSERT INTO Users(firstName, lastName, address, city, province, postal, phone, fax, email, userName, password, userType) VALUES('"
@@ -985,15 +986,19 @@ public class MechanicServlet extends HttpServlet {
 							+ "','"
 							+ u.getPassword() + "','" + u.getUsertype() + "')";
 					statement.executeUpdate(sql);
+
+					session.setAttribute("newUser", u);
+
+					session.setAttribute("buttonPressed", "createUser");
+					response.sendRedirect("newUser.jsp");
 				}
-				session.setAttribute("newUser", u);
+
 				statement.close();
 				conn.close();
+
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());
 			}
-			session.setAttribute("buttonPressed", "createUser");
-			response.sendRedirect("newUser.jsp");
 
 		} else {
 			try {
