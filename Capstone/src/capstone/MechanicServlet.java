@@ -144,16 +144,19 @@ public class MechanicServlet extends HttpServlet {
 					session.setAttribute("disableInv", null);
 
 				response.sendRedirect("http://localhost:8080/Capstone/vech_view.jsp");
-			} else if (inspectId != null) {
-				int inspectid = Integer.parseInt(request.getParameter("inspectid"));
+			}
+			if (inspectId != null) {
+				int inspectid = Integer.parseInt(request
+						.getParameter("inspectid"));
 				Map<String, String> vechStatus = new HashMap<String, String>(22);
 				ArrayList<Inspection> inspect = (ArrayList<Inspection>) session
 						.getAttribute("inspects");
 
-				for(int i = 0; i < inspect.size(); i++){					
-					if(inspect.get(i).getInspectid() == inspectid){
+				for (int i = 0; i < inspect.size(); i++) {
+					if (inspect.get(i).getInspectid() == inspectid) {
 						// Ex Lights
-						System.out.println("In " + inspect.get(i).getInspectid());
+						System.out.println("In "
+								+ inspect.get(i).getInspectid());
 						if (inspect.get(i).getExlights().equals("G"))
 							vechStatus.put("exLights", "green");
 						else if (inspect.get(i).getExlights().equals("R"))
@@ -304,9 +307,9 @@ public class MechanicServlet extends HttpServlet {
 						vechStatus.put("notes", inspect.get(i).getNotes());
 
 						session.setAttribute("status", vechStatus);
-						response.sendRedirect("http://localhost:8080/Capstone/view_checklist.jsp");					
+						response.sendRedirect("http://localhost:8080/Capstone/view_checklist.jsp");
 					}
-				}		
+				}
 			}
 
 		} catch (SQLException e) {
